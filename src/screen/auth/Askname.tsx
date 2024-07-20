@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Platform } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { colors } from '../../configs/utils/colors';
 import { image, mHeight, mWidth } from '../../configs/utils/utils';
@@ -22,17 +22,19 @@ export default function Askname() {
   };
 
   return (
-    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{ flex: 1 }}>
-      <View style={styles.logoContainer}>
-        <Image source={image.whiteLogo} style={styles.logo} resizeMode="contain" />
+    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{flex:1,
+    alignItems:'center',
+    paddingTop:Platform.OS == 'ios'?20:5}}>
+  
+      <View style={{marginTop:hp(10),justifyContent:'center',marginBottom:30}}>
+          <Image source={image.whiteLogo}  style={{width:100,height:100}} />
+        </View>
         <View style={styles.progressBar}>
           <View style={styles.progressIndicator} />
         </View>
-      </View>
-
-      <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={styles.contentContainer}>
+      <View  style={styles.contentContainer}>
         <View style={styles.greetingContainer}>
-          <Text style={styles.greetingText}>What is your name</Text>
+          <Text style={styles.greetingText}>What is your name ?</Text>
         </View>
         <View style={styles.inputContainer}>
           <Image source={image.User} style={styles.userIcon} />
@@ -47,7 +49,7 @@ export default function Askname() {
         <TouchableOpacity onPress={handleNext} style={styles.button}>
           <Text style={styles.buttonText}>NEXT</Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </View>
     </LinearGradient>
   );
 }
@@ -70,11 +72,11 @@ const styles = StyleSheet.create({
   progressBar: {
     backgroundColor: '#eb90e7',
     alignSelf: 'center',
-    marginTop: 30,
+    
     borderRadius: 20,
     height: 20,
     width: '90%',
-    marginBottom: 20,
+marginBottom:10
   },
   progressIndicator: {
     backgroundColor: '#794ebc',
@@ -83,30 +85,44 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   contentContainer: {
-    height: hp(40),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+
+backgroundColor:'#da3dd3',
+marginTop:20,
+paddingVertical:20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: mWidth * 0.01,
-    borderRadius: mWidth * 0.03,
-    marginTop: mHeight * 0.10,
-    backgroundColor: colors.cardColor,
+   paddingHorizontal:10,
+    borderRadius: 10,
+   
+
   },
   greetingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   greetingText: {
-    fontSize: 26,
+    fontSize:22,
     fontWeight: '700',
     color: '#fff',
+    fontFamily:'Lexend'
   },
   inputContainer: {
     backgroundColor: '#fff',
     marginTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    height: 55,
-    borderRadius: 10,
+    height: 50,
+
+    borderRadius: 15,
     width: wp(80),
     paddingHorizontal: 10,
   },
@@ -118,11 +134,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     flex: 1,
+    marginLeft:10,
+    fontFamily:'Lexend'
   },
   button: {
     backgroundColor: colors.btnColor,
     paddingHorizontal: mWidth * 0.05,
-    paddingVertical: mHeight * 0.03,
+    paddingVertical: mHeight * 0.04,
     width: mWidth * 0.4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -134,5 +152,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.white,
     fontWeight: '600',
+    fontFamily:'Lexend'
   },
 });

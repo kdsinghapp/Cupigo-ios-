@@ -48,8 +48,9 @@ const Distance = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ height: Platform.OS == 'android' ?5 :50 ,}} />
-      <View style={{justifyContent:'center',height:60,alignItems:'center'}}>
+     
+      <View style={{justifyContent:'center',height:60,alignItems:'center',marginTop: Platform.OS == 'android' ?5 :30}}>
+
       <Text style={styles.title}>Distance</Text>
       <TouchableOpacity
         onPress={() => {
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFE6F3',
     paddingVertical: 5,
-    height:60
+
   },
   backButton: {
 position:'absolute',
@@ -136,11 +137,12 @@ left:10,top:50
     borderRadius: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize:18,
     fontWeight: 'bold',
     color: '#800080',
     marginBottom: 20,
     textAlign: 'center',
+            fontFamily:'Lexend'
   },
 });
 

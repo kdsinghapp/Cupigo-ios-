@@ -30,7 +30,7 @@ const params ={
     <View style={styles.container}>
       {isLoading?<Loading />:null}
       <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={{height:Platform.OS == 'ios'?15:0}} />
+      <View style={{height:Platform.OS == 'ios'?30:0}} />
       <View style={styles.header}>
      
         <Text style={styles.headerText}>Contact Us</Text>
@@ -95,10 +95,10 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: 'center',
   marginTop:15,
-    fontSize: 20,
+  fontSize:18,
     fontWeight: 'bold',
     color: '#333',
-    
+    fontFamily:'Lexend'
   },
   imageContainer: {
     alignItems: 'center',
@@ -119,12 +119,14 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     fontSize: 18,
-    color: '#FF6EC7',
+    color: '#BD0DF4',
     fontWeight: '700',
+    fontFamily:'Recoleta-SemiBold'
   },
   textInput: {
     height: hp(15),
     textAlignVertical: 'top',
+    fontFamily:'Recoleta-SemiBold'
   },
   submitButton: {
     borderRadius: 10,
@@ -135,5 +137,6 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
+    
   },
 });

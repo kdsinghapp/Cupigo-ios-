@@ -43,9 +43,10 @@ export default function TabNavigator() {
       }}
  tabBar={(props) => <CustomTabBar {...props} />}
     >
+     
       <Tab.Screen
-        name="Find Matches"
-        component={Findmatches}
+        name="Subscription"
+        component={Subscription}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image
@@ -59,9 +60,9 @@ export default function TabNavigator() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Subscription"
-        component={Subscription}
+       <Tab.Screen
+        name="Find Matches"
+        component={Findmatches}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image

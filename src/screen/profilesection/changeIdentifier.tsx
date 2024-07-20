@@ -82,7 +82,7 @@ const handleAnswerChange = (questionId, text) => {
     return (
       <View style={styles.inputContainer}>
         <Text style={styles.title}>{item.question}</Text>
-        <View style={styles.inputWrapper}>
+        {isEdit ?         <View style={styles.inputWrapper}>
           <TextInput
             editable={isEdit} // Control whether the input is editable based on isEdit state
             placeholder={`Answer for ${item.question}`}
@@ -90,7 +90,8 @@ const handleAnswerChange = (questionId, text) => {
             onChangeText={(text) => handleAnswerChange(item.question_id, text)}
             style={styles.input}
           />
-        </View>
+        </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{answerText}</Text>
+    }
       </View>
     );
   };
@@ -101,8 +102,7 @@ const handleAnswerChange = (questionId, text) => {
       <View style={{ height: Platform.OS == 'ios' ? 30 : 0 }} />
       <ScrollView>
         <View style={styles.header}>
-        <Text style={styles.headerText}>Change identifier</Text>
-          <TouchableOpacity
+        <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}
@@ -110,9 +110,9 @@ const handleAnswerChange = (questionId, text) => {
           >
             <Image source={image.left} style={styles.backButtonImage} />
           </TouchableOpacity>
-        </View>
-      
-        {!isEdit && // Render Edit button only when not in edit mode
+        <Text style={styles.headerText}>Change identifier</Text>
+    
+          {!isEdit && // Render Edit button only when not in edit mode
               <TouchableOpacity
                 style={styles.editButton}
                 onPress={() => setIsEdit(true)}
@@ -120,12 +120,15 @@ const handleAnswerChange = (questionId, text) => {
                 <LinearGradient
                   colors={['#BD0DF4', '#FA3EBA']}
                   start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }}
-                  style={[styles.linearGradient, { height: 45, width: '30%' }]}
+                  style={[styles.linearGradient, { height:30, width: '100%' }]}
                 >
                   <Text style={styles.saveButtonText}>Edit</Text>
                 </LinearGradient>
               </TouchableOpacity>
             }
+        </View>
+      
+     
         {getQueAns?.length > 0 &&
           <View style={styles.formContainer}>
             <FlatList
@@ -162,10 +165,12 @@ const styles = StyleSheet.create({
   headerText: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize:18,
     fontWeight: 'bold',
     color: '#333',
-   marginLeft:30
+   marginLeft:40,
+   fontFamily:'Lexend'
+
 
   },
   linearGradient: {
@@ -182,17 +187,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#4D005A',
     marginBottom: 5,
-    marginLeft: 10,
-    marginTop: 10
+
+    marginTop: 10,
+    fontFamily:'Recoleta-SemiBold'
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: wp(5),
+justifyContent:'space-between',
+    height:60
   },
   backButton: {
-    position: 'absolute',
-    top: 10,
     left: 20,
   },
   backButtonImage: {
@@ -232,8 +237,9 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   editButton: {
-    height: 40,
+  padding:5,
     alignItems: 'flex-end',
-    paddingHorizontal: 20,
+    
+    width:'20%'
   },
 });

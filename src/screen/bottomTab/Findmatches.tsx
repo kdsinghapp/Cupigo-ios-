@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Modal, Animated } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Modal, Animated, Text } from 'react-native';
 import Header from '../../configs/Header';
 import { image } from '../../configs/utils/images';
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,6 +91,8 @@ const FindMatches = () => {
 
   const animatedStyle = { opacity: animation };
 
+
+
   return (
     <View style={styles.container}>
       <Header title='Find Matches' />
@@ -104,8 +106,9 @@ const FindMatches = () => {
           <View style={styles.modalContent}>
             <Animated.View style={[styles.animationContainer, animatedStyle]}>
               <TouchableOpacity onPress={() => findMatches && saveUserToFirestore(user, findMatches)}>
-                <Image source={findMatches ? { uri: findMatches?.image } : image.radar} style={styles.image} />
+                <Image source={findMatches !== null?{uri:findMatches?.image}:image.radar} style={[styles.image,{ borderColor:findMatches == null?'#fff':'#FA3EBA',}]} />
               </TouchableOpacity>
+              {findMatches&&<Text style={{color:'#FA3EBA',    fontFamily:'Lexend',fontWeight:'700',marginTop:20}}>{findMatches?.first_name}</Text>}
             </Animated.View>
             <TouchableOpacity onPress={handleCloseModal} style={styles.closeButton}>
               <Image source={image.Close} style={styles.closeButtonIcon} />
@@ -151,11 +154,11 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   image: {
-    height: 120,
-    width: 120,
-    borderRadius: 60,
+    height: 130,
+    width: 130,
+    borderRadius: 65,
     borderWidth: 5,
-    borderColor: 'green',
+   
     marginTop: 40,
   },
   closeButton: {

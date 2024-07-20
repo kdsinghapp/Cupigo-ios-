@@ -44,7 +44,7 @@ export default function privacypolicy() {
       </TouchableOpacity>
      </View>
       <ScrollView style={styles.contentContainer} showsVerticalScrollIndicator={false}>
-        <Text style={styles.title}>{privacy_policy?.name}</Text>
+        <Text style={[styles.title,{color:'#000'}]}>{privacy_policy?.name}</Text>
         <Text style={styles.text}>
         {privacy_policy?.description}
         </Text>
@@ -56,11 +56,12 @@ export default function privacypolicy() {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
+    fontSize:18,
     fontWeight: 'bold',
     color: '#800080',
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily:'Lexend'
   },
   container: {
     flex: 1,
@@ -95,12 +96,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 10,
-  },
+
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -110,8 +106,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize:14,
-    color: '#333',
+    color: '#333', 
     marginBottom: 10,
+    fontFamily:'Lexend'
   },
   loremText: {
     fontSize: 16,

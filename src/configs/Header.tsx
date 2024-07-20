@@ -30,14 +30,15 @@ const styles = StyleSheet.create({
   },
   headerContent: {
     width: wp(100),
-    height: hp(8), // Adjust as per your design
+    height: hp(4), // Adjust as per your design
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
     fontSize: hp(2.5), // Adjust as per your design
-    fontWeight: '700',
-    color: '#000', // Adjust as per your design
+    fontWeight: '600',
+    color: '#33196B', // Adjust as per your design
+    fontFamily:'Lexend'
   },
 });
 

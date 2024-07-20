@@ -69,11 +69,13 @@ setRattingModal(true)
         padding: 20,
       },
       headerText: {
+        marginTop:25,
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 20,
         color: '#5A2D82',
+        fontFamily:'Lexend'
       },
       optionItem: {
         flexDirection: 'row',
@@ -84,9 +86,10 @@ setRattingModal(true)
         borderBottomColor: '#DDD',
       },
       optionText: {
-        fontSize: 18,
+        fontSize:15,
         color: '#FA3EBA',
-        fontWeight:'500'
+        fontWeight:'500',
+        fontFamily:'Lexend'
       },
     });
     

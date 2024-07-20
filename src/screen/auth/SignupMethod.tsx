@@ -50,8 +50,13 @@ const SignupMethod = ({  }) => {
         colors={['#BD0DF4', '#FA3EBA']}
         style={styles.background}
       >
-        <LinearGradient
-          colors={['#BD0DF4', '#FA3EBA']} style={{
+
+        <View style={{marginTop:hp(12),justifyContent:'center',marginVertical:hp(8)}}>
+          <Image source={image.whiteLogo}  style={{width:100,height:100}} />
+        </View>
+        <View
+      style={{
+        backgroundColor:'#da3dd3',
             shadowColor: "#000",
             shadowOffset: {
               width: 0,
@@ -62,9 +67,9 @@ const SignupMethod = ({  }) => {
 
             elevation: 5,
 
-            borderRadius: 10, height: hp(50), width: wp(90), padding: 20
+            borderRadius: 10, paddingVertical:20,width: wp(90), padding:15
           }}>
-          <Text style={styles.welcomeText}>Hello, <Text style={[styles.welcomeText, { fontWeight: '500' }]}>Welcome</Text> </Text>
+          <Text style={styles.welcomeText}>Hello, <Text style={[styles.welcomeText, { fontWeight: '500' ,    fontFamily:'Lexend'}]}>Welcome</Text> </Text>
           <TouchableOpacity style={[styles.button, { marginTop: 50 }]} onPress={() => {errorToast('this feature is currently under maintenance') }}>
             <Image source={image.F_icon} style={{ height: 30, width: 30 }} />
             <Text style={styles.buttonText}>Sign with Facebook</Text>
@@ -83,7 +88,7 @@ const SignupMethod = ({  }) => {
             <Image source={image.call_icon} style={{ height: 30, width: 30 }} />
             <Text style={styles.buttonText}>Sign with Phone</Text>
           </TouchableOpacity>
-        </LinearGradient>
+        </View>
 
       </LinearGradient>
     </View>
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-    justifyContent: 'center',
+
     alignItems: 'center',
   },
   content: {
@@ -112,12 +117,14 @@ const styles = StyleSheet.create({
     color: '#FFF',
     marginTop: 20,
     fontWeight: '800',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    fontFamily:'Lexend'
   },
   brandName: {
     fontSize: 40,
     color: '#FFF',
     fontWeight: 'bold',
+    fontFamily:'Lexend'
   },
   button: {
     marginTop: 10,
@@ -134,7 +141,8 @@ const styles = StyleSheet.create({
     color: '#000000', // Black text color
     fontSize: 16,
     marginLeft: 10,
-    fontWeight: '500'
+    fontWeight: '500',
+    fontFamily:'Lexend'
 
   },
 });

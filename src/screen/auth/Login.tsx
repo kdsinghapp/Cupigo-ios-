@@ -37,21 +37,17 @@ export default function Login() {
   return (
     <LinearGradient
       colors={['#BD0DF4', '#FA3EBA']}
-      style={{ flex: 1 }}
+      style={{ flex: 1,alignItems:'center' }}
     >
 
       {isLoading?<Loading />:null}
-      <View style={styles.logoContainer}>
-        <Image
-          source={image.appLogo}
-          style={styles.logo}
-          resizeMode='contain'
-        />
-      </View>
-      <LinearGradient
-        colors={['#BD0DF4', '#FA3EBA']} style={styles.contentContainer}>
+      <View style={{marginTop:hp(10),justifyContent:'center',marginVertical:hp(8)}}>
+          <Image source={image.whiteLogo}  style={{width:100,height:100}} />
+        </View>
+      <View
+  style={styles.contentContainer}>
         <View style={styles.greetingContainer}>
-          <Text style={styles.greetingText}>Login With Phone,</Text>
+          <Text style={styles.greetingText}>Login With Phone</Text>
         </View>
         <View style={styles.inputContainer}>
           <PhoneSvg width={24} height={24} />
@@ -75,7 +71,7 @@ export default function Login() {
           style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </View>
       <CountryPicker
         show={isPickerVisible}
         pickerButtonOnPress={item => {
@@ -110,13 +106,24 @@ const styles = StyleSheet.create({
     width: 80,
   },
   contentContainer: {
-    height: hp(40),
+    shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 3.84,
+
+            elevation: 5,
+
+    backgroundColor:'#da3dd3',
+paddingVertical:20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: mWidth * 0.01,
-    borderRadius: mWidth * 0.03,
-    marginTop: mHeight * 0.20,
-    backgroundColor: colors.cardColor,
+   paddingHorizontal:15,
+    borderRadius:10,
+    
+
 
 
   },
@@ -129,11 +136,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   greetingText: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '700',
     color: '#fff',
   },
   inputContainer: {
+    
     backgroundColor: '#fff',
     marginTop: 20,
     flexDirection: 'row',

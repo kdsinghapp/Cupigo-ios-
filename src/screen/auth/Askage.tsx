@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Platform } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { colors } from '../../configs/utils/colors';
 import { image, mHeight, mWidth } from '../../configs/utils/utils';
@@ -15,21 +15,25 @@ export default function Askage() {
   const [age, setAge] = useState('');
 
   const handleNext = () => {
-    if(age == '') return errorToast("Enter your age")
+    if (age == '') return errorToast("Enter your age")
     navigation.navigate(ScreenNameEnum.ASK_SELF, { username, age });
   };
 
   return (
-    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{ flex: 1 }}>
-      <View style={styles.logoContainer}>
-        <Image source={image.whiteLogo} style={styles.logo} resizeMode="contain" />
-        <View style={styles.progressBar}>
-          <View style={styles.progressIndicator} />
-        </View>
+    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{
+      flex: 1,
+      alignItems: 'center',
+      paddingTop: Platform.OS == 'ios' ? 20 : 5
+    }}>
+      <View style={{ marginTop: hp(10), justifyContent: 'center', marginBottom: 30 }}>
+        <Image source={image.whiteLogo} style={{ width: 100, height: 100 }} />
       </View>
-      <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={styles.contentContainer}>
+      <View style={styles.progressBar}>
+        <View style={styles.progressIndicator} />
+      </View>
+      <View style={styles.contentContainer}>
         <View style={styles.greetingContainer}>
-          <Text style={styles.greetingText}>How old are you</Text>
+          <Text style={styles.greetingText}>How old are you ?</Text>
         </View>
         <View style={styles.inputContainer}>
           <Image source={image.Calendar} style={styles.icon} />
@@ -46,7 +50,7 @@ export default function Askage() {
         <TouchableOpacity onPress={handleNext} style={styles.button}>
           <Text style={styles.buttonText}>NEXT</Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </View>
     </LinearGradient>
   );
 }
@@ -82,22 +86,34 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   contentContainer: {
-    height: hp(40),
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+paddingHorizontal:10,
+    backgroundColor: '#da3dd3',
+    paddingVertical: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: mWidth * 0.01,
-    borderRadius: mWidth * 0.03,
-    marginTop: mHeight * 0.10,
-    backgroundColor: colors.cardColor,
+    marginHorizontal: 20,
+    borderRadius: 15,
+   marginTop:10
+
   },
   greetingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   greetingText: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '700',
     color: '#fff',
+    fontFamily:'Lexend'
   },
   inputContainer: {
     backgroundColor: '#fff',
@@ -108,6 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: wp(80),
     paddingHorizontal: 10,
+
   },
   icon: {
     height: 30,
@@ -117,6 +134,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     flex: 1,
+    marginLeft: 10,
+    fontFamily:'Lexend'
   },
   button: {
     backgroundColor: colors.btnColor,
@@ -133,5 +152,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.white,
     fontWeight: '600',
+    fontFamily:'Lexend'
   },
 });

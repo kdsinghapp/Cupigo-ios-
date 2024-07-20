@@ -20,6 +20,7 @@ import SignupMethod from "../screen/auth/SignupMethod";
 import Findmatches from "../screen/bottomTab/Findmatches";
 import Message from "../screen/bottomTab/Message";
 import Subscription from "../screen/bottomTab/Subscription";
+import UserProfile from "../screen/bottomTab/UserProfile";
 import chat from "../screen/bottomTab/chat/chat";
 import chatPage from "../screen/bottomTab/chat/chatPage";
 import Biography from "../screen/profilesection/Biography";
@@ -144,6 +145,10 @@ const _routes = {
     {
       name: ScreenNameEnum.Ratting,
       Component:Ratting,
+    },
+    {
+      name: ScreenNameEnum.UserProfile,
+      Component:UserProfile,
     },
    
 

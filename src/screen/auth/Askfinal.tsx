@@ -1,6 +1,6 @@
 
   import React from 'react';
-  import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+  import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native';
   import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
   import { colors } from '../../configs/utils/colors';
   import { image, mHeight, mWidth } from '../../configs/utils/utils';
@@ -16,32 +16,21 @@
     return (
       <LinearGradient
       colors={['#BD0DF4', '#FA3EBA']}
-      style={{flex:1}}
+      style={{flex:1,paddingTop:Platform.OS == 'ios'?20:5,alignItems:'center'}}
     >
-        <View style={styles.logoContainer}>
-          <Image
-            source={image.whiteLogo}
-            style={styles.logo}
-            resizeMode='contain'
-          />
-        </View>
-        <View  
-            
-            style={{backgroundColor:'#eb90e7',
-            alignSelf:'center',
-            borderRadius:20,height:20,width:'90%',marginBottom:20}}
-            >
-              <View  style={{backgroundColor:'#794ebc',height:20,width:'100%',borderRadius:20}} />
-           
-           
-            </View>
-        <LinearGradient
-      colors={['#BD0DF4', '#FA3EBA']}style={styles.contentContainer}>
+        <View style={{ marginTop: hp(5), justifyContent: 'center', marginBottom: 30 }}>
+        <Image source={image.whiteLogo} style={{ width: 100, height: 100 }} />
+      </View>
+      <View style={styles.progressBar}>
+        <View style={styles.progressIndicator} />
+      </View>
+        <View
+     style={styles.contentContainer}>
       
             <View style={styles.greetingContainer}>
             
-            <Text style={styles.greetingText}>What type of relationship did </Text>
-            <Text style={styles.greetingText}>you come to find?</Text>
+            <Text style={styles.greetingText}>You are finally ready for your</Text>
+            <Text style={styles.greetingText}> first date!</Text>
           </View>
        
         <Image source={image.check}  style={{height:100,width:100,marginVertical:30}} />
@@ -54,12 +43,27 @@
           style={styles.button}>
             <Text style={styles.buttonText}>Go To Home</Text>
           </TouchableOpacity>
-        </LinearGradient>
+        </View>
       </LinearGradient>
     );
   }
   
   const styles = StyleSheet.create({
+    progressBar: {
+      backgroundColor: '#eb90e7',
+      alignSelf: 'center',
+      marginTop:0,
+      borderRadius: 20,
+      height: 20,
+      width: '90%',
+      marginBottom:30,
+    },
+    progressIndicator: {
+      backgroundColor: '#794ebc',
+      height: 20,
+      width: '100%', // Adjust width based on completion
+      borderRadius: 20,
+    },
     container: {
       backgroundColor: colors.backgroundColor,
       flex: 1,
@@ -75,23 +79,23 @@
       width: 80,
     },
     contentContainer: {
-      height: hp(50),
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginHorizontal: mWidth * 0.01,
-      borderRadius: mWidth * 0.03,
-      marginTop: mHeight * 0.10,
-      backgroundColor: colors.cardColor,
-      shadowColor: "#000",
+      marginHorizontal:10,
+      borderRadius:20,
+      shadowColor: "#f0f0f0",
       shadowOffset: {
         width: 0,
         height: 2,
       },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
-      
-      elevation: 5,
-    
+  
+      elevation:2,
+  paddingHorizontal:10,
+      backgroundColor: '#da3dd3',
+      alignItems: 'center',
+      justifyContent: 'center',
+  
+      paddingVertical: 20,
     },
     greetingContainer: {
       
@@ -99,10 +103,11 @@
       justifyContent:'center'
     },
     greetingText: {
-      fontSize: 26,
+      fontSize: 22,
       fontWeight: '700',
       color: '#fff',
-      alignSelf:'center'
+      alignSelf:'center',
+      fontFamily:'Lexend'
     },
     inputContainer: {
       backgroundColor: '#4D005A',
@@ -135,6 +140,7 @@
       fontSize: 16,
       color: colors.white,
       fontWeight: '600',
+      fontFamily:'Lexend'
     },
   });
   

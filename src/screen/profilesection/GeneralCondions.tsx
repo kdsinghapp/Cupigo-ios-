@@ -83,11 +83,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize:18,
     fontWeight: 'bold',
     color: '#800080',
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily:'Lexend'
   },
   iconContainer: {
     alignItems: 'center',
@@ -104,15 +105,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '700',
     color: '#ff00ff',
     marginBottom: 10,
+    fontFamily:'Lexend'
   },
   sectionText: {
-    fontSize: 16,
+    fontSize: 12,
     color: '#800080',
     lineHeight: 22,
+    fontFamily:'Lexend'
   },
 });
 

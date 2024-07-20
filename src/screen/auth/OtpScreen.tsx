@@ -54,19 +54,14 @@ import { login_with_otp } from '../../redux/feature/authSlice';
   return (
       <LinearGradient
       colors={['#BD0DF4', '#FA3EBA']}
-      style={{flex:1}}
+      style={{flex:1,alignItems:'center'}}
     >
       {isLoading?<Loading />:null}
-        <View style={styles.logoContainer}>
-
-          <Image
-            source={image.whiteLogo}
-            style={styles.logo}
-            resizeMode='contain'
-          />
+      <View style={{marginTop:hp(10),justifyContent:'center',marginVertical:hp(8)}}>
+          <Image source={image.whiteLogo}  style={{width:100,height:100}} />
         </View>
-        <LinearGradient
-      colors={['#BD0DF4', '#FA3EBA']}style={styles.contentContainer}>
+        <View
+     style={styles.contentContainer}>
           <View style={styles.greetingContainer}>
             <Text style={styles.greetingText}>Enter the verification code</Text>
           </View>
@@ -104,7 +99,7 @@ import { login_with_otp } from '../../redux/feature/authSlice';
           style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
-        </LinearGradient>
+        </View>
       </LinearGradient>
     );
   }
@@ -157,15 +152,23 @@ import { login_with_otp } from '../../redux/feature/authSlice';
       height: 80,
       width: 80,
     },
-    contentContainer: {
-      height: hp(40),
+        contentContainer: {
+paddingVertical:20,
       alignItems: 'center',
       justifyContent: 'center',
-      marginHorizontal: mWidth * 0.01,
-      borderRadius: mWidth * 0.03,
-      marginTop: mHeight * 0.20,
-      backgroundColor: colors.cardColor,
-   
+paddingHorizontal:15,
+      borderRadius:10,
+     
+      backgroundColor:'#da3dd3',
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
     
     },
     greetingContainer: {
@@ -173,7 +176,7 @@ import { login_with_otp } from '../../redux/feature/authSlice';
       alignItems: 'center',
     },
     greetingText: {
-      fontSize: 26,
+      fontSize: 22,
       fontWeight: '700',
       color: '#fff',
     },
@@ -195,7 +198,7 @@ import { login_with_otp } from '../../redux/feature/authSlice';
     button: {
       backgroundColor: colors.btnColor,
       paddingHorizontal: mWidth * 0.05,
-      paddingVertical: mHeight * 0.03,
+      paddingVertical: mHeight * 0.04,
       width: mWidth * 0.4,
       justifyContent: 'center',
       alignItems: 'center',

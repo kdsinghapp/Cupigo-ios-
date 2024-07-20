@@ -75,6 +75,7 @@ city:city,
   })
   }
   return (
+
     <View style={{ backgroundColor: colors.backgroundColorLight, flex: 1 }}>
       {isLoading ? <Loading /> : null}
       <View style={{height:Platform.OS == 'ios'?30:0}} />
@@ -92,7 +93,7 @@ city:city,
                 setisEdit(true)
               }}
               style={[styles.saveButton,{width:'30%',height:30,marginVertical:2}]}>
-            <Text style={[styles.saveButtonText,{fontSize:12}]}>Edit Profile</Text>
+            <Text style={[styles.saveButtonText,{fontSize:12, fontFamily:'Lexend'}]}>Edit Profile</Text>
           </TouchableOpacity>}
        
           </View>
@@ -113,91 +114,100 @@ city:city,
         <View style={styles.formContainer}>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>User Name</Text>
-            <View style={styles.inputWrapper}>
-              <TextInput
-         editable={isEdit}
-                placeholder='User name'
-                value={userName}
-                onChangeText={setUserName}
-              />
-            </View>
+            {isEdit ?   <View style={styles.inputWrapper}>
+    <TextInput
+ editable={isEdit}
+        placeholder='User name'
+        value={userName}
+        onChangeText={setUserName}
+      />
+    </View>: <Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{userName}</Text>
+    }
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Gender</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?     <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='gender'
                 value={gender}
                 onChangeText={setGender}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{gender}</Text>
+    }
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>DOB</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?       <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='dob'
                 value={dob}
                 onChangeText={setDob}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{dob}</Text>
+    }
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Address</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?   <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='address'
                 value={address}
                 onChangeText={setAddress}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{address}</Text>
+    }
           </View>
+
           <View style={styles.inputContainer}>
             <Text style={styles.title}>City</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?     <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='city'
                 value={city}
                 onChangeText={setCity}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{city}</Text>
+    }
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Age</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?        <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='age'
                 value={age}
                 onChangeText={setAge}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{age}</Text>
+    }
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Country Code</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?       <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='country code'
                 value={countryCode}
                 onChangeText={setCountryCode}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{countryCode}</Text>
+    }
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.title}>Mobile</Text>
-            <View style={styles.inputWrapper}>
+            {isEdit ?       <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
                 placeholder='mobile'
                 value={mobile}
                 onChangeText={setMobile}
               />
-            </View>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{mobile}</Text>
+    }
           </View>
          {isEdit && <TouchableOpacity 
          onPress={()=>{
@@ -216,11 +226,13 @@ city:city,
 const styles = StyleSheet.create({
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+  
     color: '#4D005A',
     marginBottom: 5,
-    marginLeft: 10,
-    marginTop: 10
+
+    marginTop: 10,
+    fontFamily:'Recoleta-SemiBold'
+    
   },
   header: {
     flexDirection: 'row',
@@ -235,16 +247,17 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 140,
+    height: 140,
+    borderRadius:70,
     padding: 5,
-    backgroundColor: colors.backgroundColorLight
+    backgroundColor: colors.backgroundColorLight,
+    
   },
   profileImageStyle: {
-    width: 110,
-    height: 110,
-    borderRadius: 55,
+    width: 130,
+    height: 130,
+    borderRadius:65,
   },
   profileNameContainer: {
     flexDirection: 'row',
@@ -254,9 +267,10 @@ const styles = StyleSheet.create({
   profileName: {
     marginLeft: wp(2),
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '#33196B',
     marginTop: 20,
+    fontFamily:'Lexend'
   },
   gradient: {
     position: 'absolute',
@@ -264,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundColor,
     top: 0,
     zIndex: -1,
-    height: hp(18),
+    height: hp(20),
     width: '50%',
   },
   backButton: {
@@ -278,10 +292,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    paddingHorizontal: 15,
+
   },
   inputContainer: {
     marginBottom: 10,
+    marginHorizontal:20
   },
   inputWrapper: {
     backgroundColor: '#fff',

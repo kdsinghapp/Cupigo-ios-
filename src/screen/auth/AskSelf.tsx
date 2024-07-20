@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { colors } from '../../configs/utils/colors';
 import { image, mHeight, mWidth } from '../../configs/utils/utils';
@@ -19,19 +19,19 @@ export default function AskSelf() {
   };
 
   return (
-    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{ flex: 1 }}>
-      <View style={styles.logoContainer}>
-        <Image source={image.whiteLogo} style={styles.logo} resizeMode="contain" />
+    <LinearGradient colors={['#BD0DF4', '#FA3EBA']}  style={{flex:1,paddingTop:Platform.OS == 'ios'?20:5,    alignItems: 'center',}}>
+        <View style={{marginTop:hp(10),justifyContent:'center',marginBottom:30}}>
+          <Image source={image.whiteLogo}  style={{width:100,height:100}} />
+        </View>
         <View style={styles.progressBar}>
           <View style={styles.progressIndicator} />
         </View>
-      </View>
-      <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={styles.contentContainer}>
+      <View style={styles.contentContainer}>
         <View style={styles.greetingContainer}>
-          <Text style={styles.greetingText}>How do you define yourself</Text>
+          <Text style={styles.greetingText}>How do you define yourself ?</Text>
         </View>
         <View style={styles.inputContainer}>
-          <Image source={image.Gender} style={styles.icon} />
+
           <TouchableOpacity onPress={() => setGender('male')} style={gender === 'male' ? styles.selectedButton : styles.genderButton}>
             <Text style={[styles.genderText,{color:gender === 'male'?'#fff':'#BD0DF4'}]}>Male</Text>
           </TouchableOpacity>
@@ -39,13 +39,13 @@ export default function AskSelf() {
             <Text style={[styles.genderText,{color:gender === 'female'?'#fff':'#BD0DF4'}]}>Female</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setGender('transgender')} style={gender === 'transgender' ? styles.selectedButton : styles.genderButton}>
-            <Text style={[styles.genderText,{color:gender === 'transgender'?'#fff':'#BD0DF4'}]}>Transgender</Text>
+            <Text style={[styles.genderText,{color:gender === 'transgender'?'#fff':'#BD0DF4'}]}>Other</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={handleNext} style={styles.button}>
           <Text style={styles.buttonText}>NEXT</Text>
         </TouchableOpacity>
-      </LinearGradient>
+      </View>
     </LinearGradient>
   );
 }
@@ -81,22 +81,34 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   contentContainer: {
-    height: hp(40),
+   paddingVertical:20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: mWidth * 0.01,
-    borderRadius: mWidth * 0.03,
-    marginTop: mHeight * 0.10,
-    backgroundColor: colors.cardColor,
+ paddingHorizontal:10,
+    borderRadius:10,
+
+
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+  
+      elevation: 5,
+  
+  backgroundColor:'#da3dd3',
   },
   greetingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   greetingText: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '700',
     color: '#fff',
+    fontFamily:'Lexend'
   },
   inputContainer: {
     marginTop: 20,
@@ -109,7 +121,7 @@ const styles = StyleSheet.create({
   genderButton: {
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderRadius: 10,
     marginTop: 10,
     width: wp(80),
@@ -118,7 +130,7 @@ const styles = StyleSheet.create({
   selectedButton: {
     backgroundColor: '#BD0DF4',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderRadius: 10,
     marginTop: 10,
     width: wp(80),
@@ -128,6 +140,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#BD0DF4',
+    fontFamily:'Lexend'
   },
   button: {
     backgroundColor: colors.btnColor,
@@ -144,5 +157,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.white,
     fontWeight: '600',
+    fontFamily:'Lexend'
   },
 });

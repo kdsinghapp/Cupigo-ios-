@@ -42,6 +42,8 @@ export const image = {
    img2: require('../../assets/croping/img2.png'),
    genral: require('../../assets/croping/genral.png'),
    Close: require('../../assets/croping/close.png'),
+   Buy: require('../../assets/croping/buy.png'),
+   c_sub: require('../../assets/croping/CurrentSubscription.png'),
 
 
 

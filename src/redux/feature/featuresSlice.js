@@ -13,7 +13,7 @@ const initialState = {
   isSuccess: false,
   SubscriptionPlan: null,
   PayMentStatus: null,
-  matchPersons: [],
+  matchPersons:null,
   privacy_policy: [],
   general_conditions: [],
   NearByUser: [],
@@ -235,7 +235,7 @@ export const Payment_api = createAsyncThunk(
 export const create_subscription = createAsyncThunk(
   'create_subscription',
   async (params, thunkApi) => {
-    console.log('🚀 create_subscription', params.data);
+    console.log('🚀 create_subscription', params);
 
     try {
       let data = new FormData();

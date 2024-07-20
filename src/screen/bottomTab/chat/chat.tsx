@@ -314,7 +314,7 @@ export default function Chat() {
         <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => setShowModal(true)}>
           <Image source={image.gallery} style={{ height: 20, width: 30 }} resizeMode='contain' />
         </TouchableOpacity> */}
-        <View style={{ width: '90%', height: 40 }}>
+        <View style={{ width: '85%', height: 40 }}>
 
           <TextInput
             style={styles.textInput}
@@ -392,6 +392,7 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 16,
     color: '#333333',
+    fontFamily:'Lexend'
   },
   cancelButton: {
     paddingVertical: 15,
@@ -402,6 +403,7 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: 16,
     color: '#FF4081',
+    fontFamily:'Lexend'
   },
   emojiPickerContainer: {
     position: 'absolute',
@@ -440,6 +442,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#33196B',
     marginTop: 20,
+    fontFamily:'Lexend'
   },
   messageList: {
     padding: wp(5),
@@ -448,6 +451,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
     padding: wp(3),
     borderRadius: 10,
+
   },
   senderContainer: {
     alignSelf: 'flex-end',
@@ -457,6 +461,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderBottomRightRadius: 30,
     borderTopRightRadius: 0,
+marginRight:15
   },
   receiverContainer: {
     alignSelf: 'flex-start',
@@ -466,16 +471,19 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     borderBottomLeftRadius: 30,
     borderTopRightRadius: 30,
+    marginLeft:15
   },
   messageText: {
     fontSize: 14,
     marginTop: 5,
+    fontFamily:'Lexend'
   },
   senderText: {
     color: '#4635E2',
   },
   receiverText: {
     color: '#C43F8E',
+    fontFamily:'Lexend'
   },
   messageInfo: {
     flexDirection: 'row',
@@ -492,14 +500,17 @@ const styles = StyleSheet.create({
   messageSender: {
     fontSize: 12,
     fontWeight: 'bold',
+    fontFamily:'Lexend'
   },
   senderName: {
     color: '#4635E2',
     fontSize: 10,
+    fontFamily:'Lexend'
   },
   receiverName: {
     color: '#C43F8E',
     fontSize: 10,
+    fontFamily:'Lexend'
   },
   inputContainer: {
     flexDirection: 'row',
@@ -509,7 +520,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#ccc',
   },
-  textInput: {},
+  textInput: {    fontFamily:'Lexend'},
   messageImage: {
     width: 200,
     height: 200,
@@ -527,6 +538,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#4635E2',
     textDecorationLine: 'underline',
+    fontFamily:'Lexend'
   },
 });
 

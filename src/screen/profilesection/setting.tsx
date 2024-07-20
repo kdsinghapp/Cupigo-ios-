@@ -133,22 +133,26 @@ const styles = StyleSheet.create({
 paddingHorizontal:10
   },
   title: {
-    fontSize: 24,
+    fontSize:18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
     color: '#5A2D82',
+    fontFamily:'Lexend'
   },
   option: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
+    paddingHorizontal:15
   },
   optionText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#800080',
-    fontWeight: '600'
+    fontWeight: '600',
+    fontFamily:'Lexend',
+    marginLeft:-10
   },
 });
 

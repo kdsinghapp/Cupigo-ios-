@@ -17,6 +17,7 @@ enum ScreenNameEnum {
   ASK_ABOUT ='ASK_ABOUT',
   ASK_FINAL ='ASK_FINAL',
   CHAT_SCREEN='CHAT_SCREEN',
+  UserProfile='UserProfile',
 
   BOTTOM_TAB = 'BOTTOM_TAB',
 

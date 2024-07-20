@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { add_rates, add_ratting } from '../../redux/feature/featuresSlice';
 import { errorToast } from '../../configs/customToast';
 import { image } from '../../configs/utils/images';
+import LinearGradient from 'react-native-linear-gradient';
 
 const AddRatingModal = ({ isVisible, onClose, onSubmit, data }) => {
   const [rating, setRating] = useState(0);
@@ -72,14 +73,21 @@ const AddRatingModal = ({ isVisible, onClose, onSubmit, data }) => {
             <TextInput
               style={styles.input}
               placeholder="Add a comment"
+            
               multiline
               value={comment}
               onChangeText={setComment}
             />
-            <TouchableOpacity
-              onPress={handleSubmit}
+            <TouchableOpacity onPress={handleSubmit}>
+
+
+   <LinearGradient
+                  colors={['#BD0DF4', '#FA3EBA']}
+                  start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }}
+              
               style={styles.submitButton}>
-              <Text style={styles.submitButtonText}>Submit Rating</Text>
+              <Text style={styles.submitButtonText}>Submit</Text>
+            </LinearGradient>
             </TouchableOpacity>
           </View>
         </View>
@@ -123,7 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 36,
     color: '#000',
-    fontFamily: 'Federo-Regular',
+    fontFamily:'Lexend',
     marginBottom: 10,
   },
   input: {
@@ -135,22 +143,23 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 5,
+    fontFamily:'Lexend'
   },
   submitButton: {
-    width: 225,
+    width:250,
     alignSelf: 'center',
     backgroundColor: '#1D0B38',
     height: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30,
+    borderRadius: 10,
   },
   submitButtonText: {
     fontWeight: '600',
     fontSize: 12,
     lineHeight: 18,
     color: '#fff',
-    fontFamily: 'Federo-Regular',
+    fontFamily:'Lexend'
   },
 });
 

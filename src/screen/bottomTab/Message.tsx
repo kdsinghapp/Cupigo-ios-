@@ -85,7 +85,13 @@ const Message = () => {
             style={styles.messageItem}
           >
             {/* Replace with actual user image from Firestore */}
+            <TouchableOpacity
+            onPress={()=>{
+              navigation.navigate(ScreenNameEnum.UserProfile)
+            }}
+            >
             <Image source={{ uri:item.image  }} style={styles.userImage} />
+            </TouchableOpacity>
             <View style={styles.messageLeft}>
               <View>
                 <Text style={styles.userName}>{item.name}</Text>
@@ -125,21 +131,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     color: '#5A2D82',
+    fontFamily:'Lexend'
   },
   searchInput: {
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius:15,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    height:50
+    height:45
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
     marginBottom: 10,
+    fontFamily:'Lexend'
   },
   matchImage: {
     width: 55,
@@ -156,7 +164,7 @@ const styles = StyleSheet.create({
   messageLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '70%',
+    width: '80%',
   },
   userImage: {
     width: 50,
@@ -165,11 +173,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
+    fontFamily:'Lexend',
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
   },
   userMessage: {
+    fontFamily:'Lexend',
     fontSize: 14,
     color: 'gray',
   },
@@ -179,6 +189,7 @@ const styles = StyleSheet.create({
   messageTime: {
     fontSize: 12,
     color: 'gray',
+    fontFamily:'Lexend'
   },
   unreadBadge: {
     backgroundColor: '#5A2D82',
@@ -190,6 +201,7 @@ const styles = StyleSheet.create({
   unreadText: {
     color: 'white',
     fontSize: 12,
+    fontFamily:'Lexend'
   },
 });
 

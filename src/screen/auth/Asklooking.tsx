@@ -61,19 +61,20 @@ export default function Asklooking() {
   };
 
   return (
-    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{ flex: 1 }}>
+    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{ flex: 1,alignItems:'center' }}>
       {isLoading ? <Loading /> : null}
+      <View style={{ marginTop: hp(8), justifyContent: 'center', marginBottom: 30 }}>
+        <Image source={image.whiteLogo} style={{ width: 100, height: 100 }} />
+      </View>
+      <View style={styles.progressBar}>
+        <View style={styles.progressIndicator} />
+      </View>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.logoContainer}>
-          <Image source={image.whiteLogo} style={styles.logo} resizeMode='contain' />
-          <View style={styles.progressBar}>
-            <View style={styles.progressIndicator} />
-          </View>
-        </View>
-        <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={styles.contentContainer}>
+       
+        <View style={styles.contentContainer}>
           {AboutQuestion?.map((question, index) => (
             <View key={index} style={{ marginBottom: 20 }}>
-              <Text style={[styles.greetingText, { fontSize: 18, width: '80%' }]}>
+              <Text style={[styles.greetingText, { fontSize: 18, width: '80%',    fontFamily:'Lexend' }]}>
                 {question.question}
               </Text>
               <View style={styles.inputContainer}>
@@ -96,7 +97,7 @@ export default function Asklooking() {
           <TouchableOpacity onPress={handleNext} style={styles.button}>
             <Text style={styles.buttonText}>NEXT</Text>
           </TouchableOpacity>
-        </LinearGradient>
+        </View>
       </ScrollView>
     </LinearGradient>
   );
@@ -119,11 +120,11 @@ const styles = StyleSheet.create({
   progressBar: {
     backgroundColor: '#eb90e7',
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop:0,
     borderRadius: 20,
     height: 20,
     width: '90%',
-    marginBottom: 20,
+    marginBottom:30,
   },
   progressIndicator: {
     backgroundColor: '#794ebc',
@@ -132,22 +133,22 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   contentContainer: {
-    minHeight: hp(65),
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: mWidth * 0.01,
-    borderRadius: mWidth * 0.03,
-    marginTop: mHeight * 0.10,
-    backgroundColor: colors.cardColor,
-    shadowColor: '#000',
+    borderRadius:20,
+    shadowColor: "#f0f0f0",
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
-    paddingVertical: mHeight * 0.05,
+
+    elevation:2,
+paddingHorizontal:10,
+    backgroundColor: '#da3dd3',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    paddingVertical: 20,
   },
   greetingContainer: {
     flexDirection: 'row',
@@ -157,14 +158,15 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: '700',
     color: '#fff',
+    fontFamily:'Lexend'
   },
   inputContainer: {
     backgroundColor: '#fff',
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    height: 55,
-    borderRadius: 10,
+    height: 50,
+    borderRadius:15,
     width: wp(80),
     paddingHorizontal: 10,
   },
@@ -172,11 +174,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     flex: 1,
+    fontFamily:'Lexend'
   },
   button: {
     backgroundColor: colors.btnColor,
     paddingHorizontal: mWidth * 0.05,
-    paddingVertical: mHeight * 0.03,
+    paddingVertical: 15,
     width: mWidth * 0.4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -188,5 +191,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.white,
     fontWeight: '600',
+    fontFamily:'Lexend'
   },
 });

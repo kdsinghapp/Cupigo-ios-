@@ -14,24 +14,19 @@ const SplashScreen: React.FC<SplashScreenProps> = (props) => {
 
   const isLogOut = useSelector((state) => state.auth.isLogOut);
   const isLogin = useSelector((state) => state.auth.isLogin);
-  const isFoucs = useIsFocused();
 
-  const checkLogout = () => {
-    console.log('================checkLogout===========isLogOut=========', isLogOut);
-    console.log('================checkLogout===========isLogin=========', isLogin);
-    if (!isLogOut && !isLogin || isLogOut && !isLogin) {
-      console.log('================Login====================');
-      navigation.navigate(ScreenNameEnum.SIGNUP_METHOD);
-    }
-    if (!isLogOut && isLogin) {
-      console.log('================HomeTab====================');
-      navigation.navigate(ScreenNameEnum.BOTTOM_TAB);
-    }
-  }
+
+  const isFocused = useIsFocused();
+
 
   useEffect(() => {
-    checkLogout();
-  }, [isFoucs, isLogOut]);
+    const timer = setTimeout(() => {
+      navigation.navigate(ScreenNameEnum.WELLCOME_SCREEN);
+    }, 1000); // 3 seconds
+
+    // Cleanup function to clear the timeout if the component unmounts or dependencies change
+    return () => clearTimeout(timer);
+  }, [isFocused, isLogOut]);
 
 
 

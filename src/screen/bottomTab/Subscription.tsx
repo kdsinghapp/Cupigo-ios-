@@ -10,6 +10,7 @@ import Loading from '../../configs/Loader';
 import { useIsFocused } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 import Header from '../../configs/Header';
+import { errorToast } from '../../configs/customToast';
 
 const getLogo = (title) => {
   switch (title) {
@@ -23,7 +24,22 @@ const getLogo = (title) => {
       return null;
   }
 };
+function calculateDaysToEndDate(endDateString) {
+  // Get the current date
+  const currentDate = new Date();
+  
+  // Parse the end date
+  const endDate = new Date(endDateString);
 
+  // Calculate the difference in milliseconds
+  const diffInMilliseconds = endDate - currentDate;
+
+  // Convert milliseconds to days
+  const millisecondsInADay = 1000 * 60 * 60 * 24;
+  const daysToEndDate = Math.ceil(diffInMilliseconds / millisecondsInADay);
+
+  return daysToEndDate;
+}
 export default function Subscription() {
   const [currentSubscription, setCurrentSubscription] = useState(0);
   const dispatch = useDispatch();
@@ -44,6 +60,8 @@ export default function Subscription() {
   const user = useSelector(state => state.auth.User);
   const isFocused = useIsFocused();
 
+  console.log('myPlan',myPlan);
+  
   useEffect(() => {
     get_subscription();
   }, [isFocused]);
@@ -148,8 +166,25 @@ export default function Subscription() {
       { cancelable: false }
     );
   };
+console.log(new Date());
 
-  console.log(myPlan?.plan_id,id);
+  function formatDate(dateString) {
+    // Create a new Date object from the provided date string
+    const date = new Date(dateString);
+  
+    // Define options for formatting the date
+    const options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    };
+  
+    // Format the date using toLocaleDateString with the defined options
+    const formattedDate = date.toLocaleDateString('en-US', options);
+  
+    return formattedDate;
+  }
   
   return (
     <View style={styles.container}>
@@ -166,15 +201,17 @@ export default function Subscription() {
       ) : (
         <>
           <Header title='Subscription' />
-          <View style={[styles.contentContainer,]}>
-            <View style={[styles.imageContainer,[{borderWidth:myPlan?.plan_id == id ?5:0,borderColor:'#00FF00'}]]}>
-              <Image source={image.Sub_b} resizeMode='cover' style={styles.image} />
+        
+        {!myPlan?.plan_id ? <View style={[styles.contentContainer,]}>
+    
+            <View style={[styles.imageContainer,[{}]]}>
+              <Image source={image.Sub_b} resizeMode='cover' style={{height:hp(20)}} />
               <View style={styles.subscriptionDetails}>
                 {logo && <Image source={logo} resizeMode='contain' style={styles.logo} />}
                 <View style={styles.lineContainer}>
                   <Line />
                 </View>
-                <Text style={styles.price}>{currency_symbole}{price}</Text>
+                <Text style={styles.price}>{price}{currency_symbole}</Text>
                 <Text style={styles.live}>{lives} Lives</Text>
               </View>
               <View style={styles.roseContainer}>
@@ -193,15 +230,7 @@ export default function Subscription() {
                 <Text style={styles.detailText}>ADD MULTIPLE PHOTOS</Text>
               </View>
             </View>
-            {myPlan.is_active === 'ACTIVE' ? (
-              <TouchableOpacity onPress={handleUpgrade}>
-                <LinearGradient
-                  colors={['#00FF00', '#00FF00']} // Adjust gradient colors for upgrade button
-                  start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.linearGradient}>
-                  <Text style={[styles.buttonText,{fontWeight:'700'}]}>Upgrade Subscription</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            ) : (
+      
               <TouchableOpacity onPress={Stripe_api}>
                 <LinearGradient
                   colors={['#BD0DF4', '#FA3EBA']}
@@ -209,8 +238,93 @@ export default function Subscription() {
                   <Text style={styles.buttonText}>Choose this type of subscription</Text>
                 </LinearGradient>
               </TouchableOpacity>
-            )}
+            {/* )} */}
           </View>
+        : 
+        
+        <>
+          <View style={{width:'90%',
+          borderRadius:20,
+          backgroundColor:'#fff',height:hp(16),
+          marginTop:20,justifyContent:'center',
+          alignSelf:'center'}}>
+ <Image source={image.Buy} resizeMode='cover' style={{height:hp(16),
+  position:'absolute',
+  width:'50%',}} />
+  <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+    <View style={{marginLeft:20,marginTop:-25}}>
+            {logo && <Image source={getLogo(myPlan?.title)} resizeMode='contain' style={{height:80,width:80}} />}
+            <View style={{marginTop:-20}}>
+              <Line width={60} />
+            </View>
+            <Text style={{fontSize:30,color:'#fff',fontWeight:'700',marginTop:5}}>{myPlan?.price}{currency_symbole}</Text>
+            <Text style={{fontSize:16,color:'#fff',fontWeight:'800'}}>{myPlan?.plan_details[0]?.lives} EXTRA LIVES</Text>
+          </View>
+
+          <View style={{width:'60%',alignItems:'center',justifyContent:'center'}}>
+            <Image source={image.c_sub}  
+            resizeMode='contain'
+            style={{height:120,width:120}} />
+               </View>
+          </View>
+         
+
+          <View   style={{position:'absolute',right:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between',
+        bottom:10}} >
+          
+         
+          <View>
+
+          <Text style={{fontSize:12,color:'#777777',fontWeight:'800'}}>Validity {calculateDaysToEndDate(myPlan?.end_date)} days</Text>
+          </View>
+          </View>
+          </View>
+        <View style={[styles.contentContainer,]}>
+
+        <View style={[styles.imageContainer,[{height:hp(45),width:'70%'}]]}>
+          <Image source={image.Sub_b} resizeMode='cover' style={{height:hp(20),width:'100%',position:'absolute',}} />
+          <View style={styles.subscriptionDetails}>
+            {logo && <Image source={logo} resizeMode='contain' style={{height:80,width:80}} />}
+            <View style={{marginTop:-20}}>
+              <Line />
+            </View>
+            <Text style={{fontSize:18,color:'#fff',fontWeight:'700',marginTop:5}}>{price}{currency_symbole}</Text>
+            <Text style={{fontSize:18,color:'#fff',fontWeight:'800'}}>{lives} Lives</Text>
+          </View>
+          <View style={{alignItems:'center',marginTop:5}}>
+            <Text style={[styles.roseText,{fontSize:18,}]}>{roses} Roses</Text>
+            <View style={styles.buttonsContainer}>
+              <TouchableOpacity onPress={handleLeftPress}>
+                <Image source={image.left} style={[styles.arrowButton,{height:30,width:30}]} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleRightPress}>
+              <Image source={image.right} style={[styles.arrowButton,{height:30,width:30}]} />
+              </TouchableOpacity>
+            </View>
+            <Text style={[styles.detailText,{fontSize:12}]}>CUSTOMIZABLE WALL</Text>
+            <Text style={[styles.detailText,{fontSize:12}]}>LEAVE THE CHAT AT ANY TIME</Text>
+            <Text style={[styles.detailText,{fontSize:12}]}>WITHOUT PENALTY</Text>
+            <Text style={[styles.detailText,{fontSize:12}]}>ADD MULTIPLE PHOTOS</Text>
+          </View>
+        </View>
+        
+          <TouchableOpacity onPress={()=>{
+            if(myPlan?.plan_id == id){
+errorToast('You Alredy Purchase this Subscription')
+            }
+            else{
+              Stripe_api()
+            }
+          }}>
+           {myPlan?.plan_id != id && <LinearGradient
+              colors={['#BD0DF4', '#FA3EBA']}
+              start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.linearGradient}>
+              <Text style={styles.buttonText}>{myPlan?.plan_details?'Update Subscription':'Choose this type of subscription'}</Text>
+            </LinearGradient>}
+          </TouchableOpacity>
+        {/* )} */}
+      </View>  
+    </>    }
         </>
       )}
     </View>
@@ -260,11 +374,13 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: '900',
     color: '#fff',
+    fontFamily:'Lexend'
   },
   live: {
     fontSize: 20,
     fontWeight: '900',
     color: '#fff',
+    fontFamily:'Lexend'
   },
   roseContainer: {
     alignItems: 'center',
@@ -275,6 +391,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#BD0DF4',
     marginTop: 30,
+    fontFamily:'Lexend'
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -293,6 +410,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#FA3EBA',
     marginTop: 10,
+    fontFamily:'Lexend'
   },
   linearGradient: {
     marginTop: 20,
@@ -303,6 +421,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   buttonText: {
+    fontFamily:'Lexend',
     fontSize: 18,
     textAlign: 'center',
     margin: 10,
