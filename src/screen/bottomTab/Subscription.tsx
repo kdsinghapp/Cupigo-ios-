@@ -166,7 +166,7 @@ export default function Subscription() {
       { cancelable: false }
     );
   };
-console.log(new Date());
+console.log(myPlan?.title);
 
   function formatDate(dateString) {
     // Create a new Date object from the provided date string
@@ -202,129 +202,130 @@ console.log(new Date());
         <>
           <Header title='Subscription' />
         
-        {!myPlan?.plan_id ? <View style={[styles.contentContainer,]}>
-    
-            <View style={[styles.imageContainer,[{}]]}>
-              <Image source={image.Sub_b} resizeMode='cover' style={{height:hp(20)}} />
-              <View style={styles.subscriptionDetails}>
-                {logo && <Image source={logo} resizeMode='contain' style={styles.logo} />}
-                <View style={styles.lineContainer}>
-                  <Line />
-                </View>
-                <Text style={styles.price}>{price}{currency_symbole}</Text>
-                <Text style={styles.live}>{lives} Lives</Text>
-              </View>
-              <View style={styles.roseContainer}>
-                <Text style={styles.roseText}>{roses} Roses</Text>
-                <View style={styles.buttonsContainer}>
-                  <TouchableOpacity onPress={handleLeftPress}>
-                    <Image source={image.left} style={styles.arrowButton} />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={handleRightPress}>
-                    <Image source={image.right} style={styles.arrowButton} />
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.detailText}>CUSTOMIZABLE WALL</Text>
-                <Text style={styles.detailText}>LEAVE THE CHAT AT ANY TIME</Text>
-                <Text style={styles.detailText}>WITHOUT PENALTY</Text>
-                <Text style={styles.detailText}>ADD MULTIPLE PHOTOS</Text>
-              </View>
-            </View>
-      
-              <TouchableOpacity onPress={Stripe_api}>
-                <LinearGradient
-                  colors={['#BD0DF4', '#FA3EBA']}
-                  start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.linearGradient}>
-                  <Text style={styles.buttonText}>Choose this type of subscription</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            {/* )} */}
-          </View>
-        : 
-        
-        <>
-          <View style={{width:'90%',
-          borderRadius:20,
-          backgroundColor:'#fff',height:hp(16),
-          marginTop:20,justifyContent:'center',
-          alignSelf:'center'}}>
- <Image source={image.Buy} resizeMode='cover' style={{height:hp(16),
-  position:'absolute',
-  width:'50%',}} />
-  <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-    <View style={{marginLeft:20,marginTop:-25}}>
-            {logo && <Image source={getLogo(myPlan?.title)} resizeMode='contain' style={{height:80,width:80}} />}
-            <View style={{marginTop:-20}}>
-              <Line width={60} />
-            </View>
-            <Text style={{fontSize:30,color:'#fff',fontWeight:'700',marginTop:5}}>{myPlan?.price}{currency_symbole}</Text>
-            <Text style={{fontSize:16,color:'#fff',fontWeight:'800'}}>{myPlan?.plan_details[0]?.lives} EXTRA LIVES</Text>
-          </View>
-
-          <View style={{width:'60%',alignItems:'center',justifyContent:'center'}}>
-            <Image source={image.c_sub}  
-            resizeMode='contain'
-            style={{height:120,width:120}} />
-               </View>
-          </View>
-         
-
-          <View   style={{position:'absolute',right:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between',
-        bottom:10}} >
-          
-         
-          <View>
-
-          <Text style={{fontSize:12,color:'#777777',fontWeight:'800'}}>Validity {calculateDaysToEndDate(myPlan?.end_date)} days</Text>
-          </View>
-          </View>
-          </View>
+        {!myPlan?.plan_id ? 
         <View style={[styles.contentContainer,]}>
 
-        <View style={[styles.imageContainer,[{height:hp(45),width:'70%'}]]}>
-          <Image source={image.Sub_b} resizeMode='cover' style={{height:hp(20),width:'100%',position:'absolute',}} />
-          <View style={styles.subscriptionDetails}>
-            {logo && <Image source={logo} resizeMode='contain' style={{height:80,width:80}} />}
-            <View style={{marginTop:-20}}>
-              <Line />
-            </View>
-            <Text style={{fontSize:18,color:'#fff',fontWeight:'700',marginTop:5}}>{price}{currency_symbole}</Text>
-            <Text style={{fontSize:18,color:'#fff',fontWeight:'800'}}>{lives} Lives</Text>
-          </View>
-          <View style={{alignItems:'center',marginTop:5}}>
-            <Text style={[styles.roseText,{fontSize:18,}]}>{roses} Roses</Text>
-            <View style={styles.buttonsContainer}>
-              <TouchableOpacity onPress={handleLeftPress}>
-                <Image source={image.left} style={[styles.arrowButton,{height:30,width:30}]} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleRightPress}>
-              <Image source={image.right} style={[styles.arrowButton,{height:30,width:30}]} />
-              </TouchableOpacity>
-            </View>
-            <Text style={[styles.detailText,{fontSize:12}]}>CUSTOMIZABLE WALL</Text>
-            <Text style={[styles.detailText,{fontSize:12}]}>LEAVE THE CHAT AT ANY TIME</Text>
-            <Text style={[styles.detailText,{fontSize:12}]}>WITHOUT PENALTY</Text>
-            <Text style={[styles.detailText,{fontSize:12}]}>ADD MULTIPLE PHOTOS</Text>
-          </View>
+        <View style={[styles.imageContainer,[{}]]}>
+        <Image source={image.Sub_b} resizeMode='cover' style={styles.image} />
+        <View style={styles.subscriptionDetails}>
+        {logo && <Image source={logo} resizeMode='contain' style={styles.logo} />}
+        <View style={styles.lineContainer}>
+        <Line />
+        </View>
+        <Text style={styles.price}>{currency_symbole}{price}</Text>
+        <Text style={styles.live}>{lives} Lives</Text>
+        </View>
+        <View style={styles.roseContainer}>
+        <Text style={styles.roseText}>{roses} Roses</Text>
+        <View style={styles.buttonsContainer}>
+        <TouchableOpacity onPress={handleLeftPress}>
+        <Image source={image.left} style={styles.arrowButton} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleRightPress}>
+        <Image source={image.right} style={styles.arrowButton} />
+        </TouchableOpacity>
+        </View>
+        <Text style={styles.detailText}>CUSTOMIZABLE WALL</Text>
+        <Text style={styles.detailText}>LEAVE THE CHAT AT ANY TIME</Text>
+        <Text style={styles.detailText}>WITHOUT PENALTY</Text>
+        <Text style={styles.detailText}>ADD MULTIPLE PHOTOS</Text>
+        </View>
         </View>
         
-          <TouchableOpacity onPress={()=>{
-            if(myPlan?.plan_id == id){
-errorToast('You Alredy Purchase this Subscription')
-            }
-            else{
-              Stripe_api()
-            }
-          }}>
-           {myPlan?.plan_id != id && <LinearGradient
-              colors={['#BD0DF4', '#FA3EBA']}
-              start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.linearGradient}>
-              <Text style={styles.buttonText}>{myPlan?.plan_details?'Update Subscription':'Choose this type of subscription'}</Text>
-            </LinearGradient>}
-          </TouchableOpacity>
+        <TouchableOpacity onPress={Stripe_api}>
+        <LinearGradient
+        colors={['#BD0DF4', '#FA3EBA']}
+        start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.linearGradient}>
+        <Text style={styles.buttonText}>Choose this type of subscription</Text>
+        </LinearGradient>
+        </TouchableOpacity>
         {/* )} */}
-      </View>  
-    </>    }
+        </View>
+        :      <>
+        <View style={{width:'90%',
+        borderRadius:20,
+        backgroundColor:'#fff',height:hp(16),
+        marginTop:20,justifyContent:'center',
+        alignSelf:'center'}}>
+<Image source={image.Buy} resizeMode='cover' style={{height:hp(16),
+position:'absolute',
+width:'50%',}} />
+<View style={{flexDirection:'row',justifyContent:'space-between'}}>
+  <View style={{marginLeft:20,marginTop:-25}}>
+          {logo && <Image source={getLogo(myPlan?.plan_details[0]?.title)} resizeMode='contain' style={{height:80,width:80}} />}
+          <View style={{marginTop:-20}}>
+            <Line width={60} />
+          </View>
+          <Text style={{fontSize:30,color:'#fff',fontWeight:'700',marginTop:5}}>{myPlan?.price}{currency_symbole}</Text>
+          <Text style={{fontSize:16,color:'#fff',fontWeight:'800'}}>{myPlan?.plan_details[0]?.lives} EXTRA LIVES</Text>
+        </View>
+
+        <View style={{width:'60%',alignItems:'center',justifyContent:'center'}}>
+          <Image source={image.c_sub}  
+          resizeMode='contain'
+          style={{height:120,width:120}} />
+             </View>
+        </View>
+       
+
+        <View   style={{position:'absolute',right:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between',
+      bottom:10}} >
+        
+       
+        <View>
+
+        <Text style={{fontSize:12,color:'#777777',fontWeight:'800'}}>Validity {calculateDaysToEndDate(myPlan?.end_date)} days</Text>
+        </View>
+        </View>
+        </View>
+      <View style={[styles.contentContainer,]}>
+
+      <View style={[styles.imageContainer,[{height:hp(45),width:'70%'}]]}>
+        <Image source={image.Sub_b} resizeMode='cover' style={{height:hp(20),width:'100%',position:'absolute',}} />
+        <View style={styles.subscriptionDetails}>
+          {logo && <Image source={logo} resizeMode='contain' style={{height:80,width:80}} />}
+          <View style={{marginTop:-20}}>
+            <Line />
+          </View>
+          <Text style={{fontSize:18,color:'#fff',fontWeight:'700',marginTop:5}}>{price}{currency_symbole}</Text>
+          <Text style={{fontSize:18,color:'#fff',fontWeight:'800'}}>{lives} Lives</Text>
+        </View>
+        <View style={{alignItems:'center',marginTop:14}}>
+          <Text style={[styles.roseText,{fontSize:18,}]}>{roses} Roses</Text>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity onPress={handleLeftPress}>
+              <Image source={image.left} style={[styles.arrowButton,{height:30,width:30}]} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleRightPress}>
+            <Image source={image.right} style={[styles.arrowButton,{height:30,width:30}]} />
+            </TouchableOpacity>
+          </View>
+          <Text style={[styles.detailText,{fontSize:12}]}>CUSTOMIZABLE WALL</Text>
+          <Text style={[styles.detailText,{fontSize:12}]}>LEAVE THE CHAT AT ANY TIME</Text>
+          <Text style={[styles.detailText,{fontSize:12}]}>WITHOUT PENALTY</Text>
+          <Text style={[styles.detailText,{fontSize:12}]}>ADD MULTIPLE PHOTOS</Text>
+        </View>
+      </View>
+      
+        <TouchableOpacity onPress={()=>{
+          if(myPlan?.plan_id == id){
+errorToast('You Alredy Purchase this Subscription')
+          }
+          else{
+            Stripe_api()
+          }
+        }}>
+         {myPlan?.plan_id != id && <LinearGradient
+            colors={['#BD0DF4', '#FA3EBA']}
+            start={{ x: 1, y: 0 }} end={{ x: 0, y: 0 }} style={styles.linearGradient}>
+            <Text style={styles.buttonText}>{myPlan?.plan_details?'Update Subscription':'Choose this type of subscription'}</Text>
+          </LinearGradient>}
+        </TouchableOpacity>
+      {/* )} */}
+    </View>  
+  </>  
+        
+     }
         </>
       )}
     </View>
@@ -430,3 +431,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+
+
+
+

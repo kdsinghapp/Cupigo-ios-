@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
-   
+   marginTop:10,
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   headerTitle: {
-    fontSize: hp(2.5), // Adjust as per your design
-    fontWeight: '600',
+    fontSize:22, // Adjust as per your design
+    fontWeight: '700',
     color: '#33196B', // Adjust as per your design
     fontFamily:'Lexend'
   },

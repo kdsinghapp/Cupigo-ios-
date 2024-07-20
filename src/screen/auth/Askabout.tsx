@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Platform } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Platform, Keyboard } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { colors } from '../../configs/utils/colors';
 import { image, mHeight, mWidth } from '../../configs/utils/utils';
@@ -17,6 +17,7 @@ export default function Askabout() {
   const { username, age, gender, address } = route.params; // Receive data from previous screens
   const isLoading = useSelector(state => state.auth.isLoading);
   const Question = useSelector(state => state.auth.Question);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   const [height1, setHeight1] = useState('');
   const [height2, setHeight2] = useState('');
@@ -25,7 +26,26 @@ export default function Askabout() {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const AboutQuestion = Question?.first;
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      () => {
+        setIsKeyboardOpen(true);
+      }
+    );
 
+    const keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => {
+        setIsKeyboardOpen(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   useEffect(() => {
     if (isFocused) {
       getQuestions();
@@ -93,6 +113,8 @@ export default function Askabout() {
               </View>
             </View>
           ))}
+
+         {isKeyboardOpen && <View  style={{height:hp(10)}} />}
           <TouchableOpacity onPress={handleNext} style={styles.button}>
             <Text style={styles.buttonText}>NEXT</Text>
           </TouchableOpacity>

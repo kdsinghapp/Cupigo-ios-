@@ -223,7 +223,7 @@ export default function Chat() {
     <View style={styles.container}>
         <View style={{ height: Platform.OS == 'android' ?5 :40 ,}} />
       <View style={styles.header}>
-        <View style={styles.headerProfile}>
+        <View style={[styles.headerProfile,{}]}>
           <Image source={{ uri: item?.image }} style={styles.profileImage} />
           <View style={{ flexDirection: 'row', alignItems: 'center', height: 50 }}>
             <Text style={styles.profileName}>{item?.name}</Text>
@@ -252,7 +252,7 @@ export default function Chat() {
           <Image source={image.left} style={{ height: 40, width: 40 }} />
         </TouchableOpacity>
       </View>
-      {isKeyboardOpen &&  <View  style={{height:55}} />}
+      {isKeyboardOpen &&  <View  style={{height:10}} />}
     <View style={{flex:1}}>
       <FlatList
         showsVerticalScrollIndicator={false}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Keyboard, Platform } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { colors } from '../../configs/utils/colors';
 import { image, mHeight, mWidth } from '../../configs/utils/utils';
@@ -17,6 +17,7 @@ export default function Asklooking() {
   const { username, age, gender, address, height1, height2, height3 } = route.params; // Receive data from previous screens
   const isLoading = useSelector(state => state.auth.isLoading);
   const Question = useSelector(state => state.auth.Question);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   // State variables for input fields
   const [genre, setGenre] = useState('');
@@ -25,7 +26,26 @@ export default function Asklooking() {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const AboutQuestion = Question?.second; // Update to use Question.second
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      () => {
+        setIsKeyboardOpen(true);
+      }
+    );
 
+    const keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => {
+        setIsKeyboardOpen(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   useEffect(() => {
     if (isFocused) {
       getQuestions();
@@ -94,6 +114,7 @@ export default function Asklooking() {
               </View>
             </View>
           ))}
+            {isKeyboardOpen && <View  style={{height:hp(10)}} />}
           <TouchableOpacity onPress={handleNext} style={styles.button}>
             <Text style={styles.buttonText}>NEXT</Text>
           </TouchableOpacity>

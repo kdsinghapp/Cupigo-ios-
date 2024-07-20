@@ -41,6 +41,7 @@ const Message = () => {
     <View style={styles.container}>
           <View style={{height:Platform.OS == 'ios'?32:0}} />
       <Text style={styles.headerText}>Message</Text>
+      
       <View style={styles.searchInput}>
         <Search />
         <TextInput
