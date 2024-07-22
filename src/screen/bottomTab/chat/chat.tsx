@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image, Modal, Keyboard, Platform } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
@@ -42,6 +42,7 @@ export default function Chat() {
   const audioRecorderPlayer = new AudioRecorderPlayer();
   const [showModal, setShowModal] = useState(false);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const flatListRef = useRef(null);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -63,7 +64,12 @@ export default function Chat() {
       keyboardDidHideListener.remove();
     };
   }, []);
-
+  useEffect(() => {
+    if (flatListRef.current) {
+      flatListRef.current.scrollToEnd({ animated: true });
+    }
+  }, [messages]); // This will run whenever the messages array changes
+  
   const openImagePicker = () => {
     setShowModal(false); // Close modal first
     ImagePicker.openPicker({
@@ -223,10 +229,10 @@ export default function Chat() {
     <View style={styles.container}>
         <View style={{ height: Platform.OS == 'android' ?5 :40 ,}} />
       <View style={styles.header}>
-        <View style={[styles.headerProfile,{}]}>
-          <Image source={{ uri: item?.image }} style={styles.profileImage} />
-          <View style={{ flexDirection: 'row', alignItems: 'center', height: 50 }}>
-            <Text style={styles.profileName}>{item?.name}</Text>
+        <View style={[styles.headerProfile,isKeyboardOpen&&{marginTop:10}]}>
+          <Image source={{ uri: item?.image }} style={[styles.profileImage,isKeyboardOpen&&{height:50,width:50,borderRadius:25}]} />
+          <View style={{ flexDirection: 'row', alignItems: 'center', height:50 }}>
+            <Text style={[styles.profileName,isKeyboardOpen&&{fontSize:14}]}>{item?.name}</Text>
             <View
               style={{
                 height: 8,
@@ -252,113 +258,75 @@ export default function Chat() {
           <Image source={image.left} style={{ height: 40, width: 40 }} />
         </TouchableOpacity>
       </View>
-      {isKeyboardOpen &&  <View  style={{height:10}} />}
-    <View style={{flex:1}}>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={messages}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View
-            style={[
-              styles.messageContainer,
-              item.sender_id === user?.id ? styles.senderContainer : styles.receiverContainer
-            ]}
-          >
-            <View style={styles.messageInfo}>
-              <Text
-                style={[
-                  styles.messageSender,
-                  item.sender_id === user?.id ? styles.senderName : styles.receiverName
-                ]}
-              >
-                {item.sender_id === user?.id ? 'You' : item.name}
-              </Text>
-              <Text style={styles.messageTime}>{formatTime(item.createdAt)}</Text>
-            </View>
-            {item.text && (
-              <Text
-                style={[
-                  styles.messageText,
-                  item.sender_id === user?.id ? styles.senderText : styles.receiverText
-                ]}
-              >
-                {item.text}
-              </Text>
-            )}
-            {item.image && (
-              <Image source={{ uri: item.image }} style={styles.messageImage} />
-            )}
-            {item.video && (
-              <Video source={{ uri: item.video }} style={styles.messageVideo} />
-            )}
-            {item.audio && (
-              <TouchableOpacity onPress={() => audioRecorderPlayer.startPlayer(item.audio)}>
-                <Text style={styles.messageAudio}>Play Audio</Text>
-              </TouchableOpacity>
-            )}
+   
+      <View style={[isKeyboardOpen && { height: hp(32) }, !isKeyboardOpen && { flex: 1 }]}>
+    <FlatList
+      ref={flatListRef}
+      showsVerticalScrollIndicator={false}
+      data={messages}
+      renderItem={({ item }) => (
+        <View
+          style={[
+            styles.messageContainer,
+            item.sender_id === user?.id ? styles.senderContainer : styles.receiverContainer
+          ]}
+        >
+          <View style={styles.messageInfo}>
+            <Text
+              style={[
+                styles.messageSender,
+                item.sender_id === user?.id ? styles.senderName : styles.receiverName
+              ]}
+            >
+              {item.sender_id === user?.id ? 'You' : route.params.item.name}
+            </Text>
+            <Text style={styles.messageTime}>{formatTime(item.createdAt)}</Text>
           </View>
-        )}
-        contentContainerStyle={styles.messageList}
-      />
-      </View>
-      {showEmojiPicker && (
-        <View style={styles.emojiPickerContainer}>
-          
+          {item.text && (
+            <Text
+              style={[
+                styles.messageText,
+                item.sender_id === user?.id ? styles.senderText : styles.receiverText
+              ]}
+            >
+              {item.text}
+            </Text>
+          )}
+          {item.image && (
+            <Image source={{ uri: item.image }} style={styles.messageImage} />
+          )}
+          {item.video && (
+            <Video source={{ uri: item.video }} style={styles.messageVideo} />
+          )}
+          {item.audio && (
+            <TouchableOpacity onPress={() => audioRecorderPlayer.startPlayer(item.audio)}>
+              <Text style={styles.messageAudio}>Play Audio</Text>
+            </TouchableOpacity>
+          )}
         </View>
       )}
+      contentContainerStyle={styles.messageList}
+    />
+  </View>
+   
       <View style={styles.inputContainer}>
-        {/* <TouchableOpacity onPress={toggleEmojiPicker} style={{ marginLeft: 10 }}>
-          <Image source={image.emoji} style={{ height: 20, width: 20 }} resizeMode='contain' />
-        </TouchableOpacity>
-        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => setShowModal(true)}>
-          <Image source={image.gallery} style={{ height: 20, width: 30 }} resizeMode='contain' />
-        </TouchableOpacity> */}
+       
         <View style={{ width: '85%', height: 40 }}>
 
           <TextInput
-            style={styles.textInput}
-            placeholder="Type a message"
-            value={messageText}
-            onChangeText={setMessageText}
-          />
+  style={styles.textInput}
+  placeholder="Type a message"
+  value={messageText}
+  onChangeText={setMessageText}
+  onFocus={() => setIsKeyboardOpen(true)}
+  onBlur={() => setIsKeyboardOpen(false)}
+/>
         </View>
-
-
-
-        {/* <TouchableOpacity
-          style={{ marginLeft: 10 }}
-          onPressIn={startRecording}
-          onPressOut={stopRecording}
-        >
-          <Image source={image.mic} style={{ height: 20, width: 20 }} resizeMode='contain' />
-        </TouchableOpacity> */}
         <TouchableOpacity onPress={onSend} style={{ marginLeft: 10 }}>
           <Image source={image.send} style={{ height: 30, width: 30 }} resizeMode='contain' />
         </TouchableOpacity>
       </View>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showModal}
-        onRequestClose={() => setShowModal(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.modalItem} onPress={openImagePicker}>
-
-              <Text style={styles.modalText}>Pick an Image</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.modalItem} onPress={openVideoPicker}>
-
-              <Text style={styles.modalText}>Pick a Video</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelButton} onPress={() => setShowModal(false)}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+     
     </View>
   );
 }
@@ -420,21 +388,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffe4fa',
   },
   header: {
-    flexDirection: 'row',
+  
     alignItems: 'center',
     padding: wp(5),
   },
   headerProfile: {
-    flex: 1,
+
+   alignSelf:'center',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: wp(2),
     marginTop: 40,
   },
   profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
   profileName: {
     marginLeft: wp(2),
@@ -519,6 +488,7 @@ marginRight:15
     backgroundColor: '#fff',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
+    height:75
   },
   textInput: {    fontFamily:'Lexend'},
   messageImage: {

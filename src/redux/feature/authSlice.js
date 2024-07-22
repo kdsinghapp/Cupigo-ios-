@@ -17,6 +17,9 @@ const initialState = {
   Question: [],
   user_profile:[]
 };
+const logOut = () => ({
+  type: LOG_OUT
+});
 
 export const login = createAsyncThunk(
   'login',
@@ -251,6 +254,15 @@ const AuthSlice = createSlice({
       state.isLogOut = false;
       state.User = action.payload;
     },
+    logoutSuccess(state) {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.isError = false;
+      state.isLogin = false;
+      state.isLogOut = true;
+      state.User = [];
+      state.user_profile = [];
+    },
   },
   extraReducers: builder => {
     // login cases
@@ -359,6 +371,6 @@ state.user_profile=action.payload
   },
 });
 
-export const { loginSuccess } = AuthSlice.actions;
+export const { loginSuccess,logoutSuccess } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

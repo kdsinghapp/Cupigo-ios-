@@ -6,6 +6,7 @@ import { image, mHeight, mWidth } from '../../configs/utils/utils';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
+import { errorToast } from '../../configs/customToast';
 
 export default function AskSelf() {
   const navigation = useNavigation();
@@ -15,6 +16,7 @@ export default function AskSelf() {
 
   const handleNext = () => {
     // Pass the username, age, and gender to the next screen
+    if (gender == '') return errorToast("Select your gender")
     navigation.navigate(ScreenNameEnum.ASK_LIVE, { username, age, gender });
   };
 

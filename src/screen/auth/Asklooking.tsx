@@ -10,6 +10,7 @@ import ScreenNameEnum from '../../routes/screenName.enum';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_quesctions } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
+import { errorToast } from '../../configs/customToast';
 
 export default function Asklooking() {
   const navigation = useNavigation();
@@ -63,6 +64,9 @@ export default function Asklooking() {
 
   const handleNext = () => {
     // Prepare data object to send to the next screen
+    if (!genre || !idealSize || !idealWeight) {
+      return errorToast("Please fill all fields.");
+     }
     const data = {
       username,
       age,
@@ -89,7 +93,7 @@ export default function Asklooking() {
       <View style={styles.progressBar}>
         <View style={styles.progressIndicator} />
       </View>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
        
         <View style={styles.contentContainer}>
           {AboutQuestion?.map((question, index) => (
@@ -112,13 +116,16 @@ export default function Asklooking() {
                   }}
                 />
               </View>
+           
             </View>
           ))}
-            {isKeyboardOpen && <View  style={{height:hp(10)}} />}
+  
+         
           <TouchableOpacity onPress={handleNext} style={styles.button}>
             <Text style={styles.buttonText}>NEXT</Text>
           </TouchableOpacity>
         </View>
+        {isKeyboardOpen && <View  style={{height:hp(20)}} />}
       </ScrollView>
     </LinearGradient>
   );

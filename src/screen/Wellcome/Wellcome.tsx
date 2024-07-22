@@ -33,7 +33,7 @@ const Welcome = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       checkLogout();
-    },2000); // 3 seconds
+    },3000); // 3 seconds
 
     // Cleanup function to clear the timeout if the component unmounts or dependencies change
     return () => clearTimeout(timer);

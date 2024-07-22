@@ -10,6 +10,7 @@ import ScreenNameEnum from '../../routes/screenName.enum';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_quesctions, submit_answers } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
+import { errorToast } from '../../configs/customToast';
 
 export default function AskRelationship() {
   const route = useRoute();
@@ -42,6 +43,10 @@ export default function AskRelationship() {
   };
 
   const submitAnswer = async () => {
+
+    if (!answer ) {
+      return errorToast("Please Select Option ");
+     }
     const params = {
       user_id: user?.id,
       age: age,
@@ -173,9 +178,9 @@ paddingHorizontal:10,
     marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 55,
+    height: 50,
     borderRadius: 10,
-    width: wp(80),
+    width: wp(85),
     paddingHorizontal: 10,
   },
   button: {

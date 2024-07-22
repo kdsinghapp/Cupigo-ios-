@@ -1,10 +1,12 @@
 
     import React, { useState } from 'react';
-    import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
+    import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import RightIcon from '../../assets/svg/Right.svg'; // Assuming you have an SVG or image for the right arrow icon
 import { useNavigation } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
 import AddRatingModal from '../modal/RattingModal';
+import { useDispatch } from 'react-redux';
+import { logoutSuccess } from '../../redux/feature/authSlice';
     
     const options = [
       { id: '1', title: 'Biography',screen:ScreenNameEnum.BIOGRAPHY },
@@ -23,7 +25,33 @@ import AddRatingModal from '../modal/RattingModal';
     const Profile = () => {
       const navigation = useNavigation()
       const [RattingModal,setRattingModal] = useState(false)
-
+const dispatch =useDispatch()
+const handleLogout = () => {
+  Alert.alert(
+    'Confirm Logout',
+    'Are you sure you want to log out?',
+    [
+      {
+        text: 'Cancel',
+        style: 'cancel', // Button style for cancel
+      },
+      {
+        text: 'OK',
+        onPress: async () => {
+          try {
+            // Dispatch logout action
+            dispatch(logoutSuccess())
+            // Navigate to SIGNUP_METHOD after logout
+            navigation.navigate(ScreenNameEnum.SIGNUP_METHOD);
+          } catch (error) {
+            console.error("Error during logout: ", error);
+          }
+        },
+      },
+    ],
+    { cancelable: false } // Prevents dismissing the alert by tapping outside of it
+  );
+};
 
       return (
         <View style={styles.container}>
@@ -36,7 +64,8 @@ import AddRatingModal from '../modal/RattingModal';
               <TouchableOpacity
               onPress={()=>{
                 if(item.title == 'Log Out'){
-                  navigation.navigate(ScreenNameEnum.SIGNUP_METHOD,)
+                
+                  handleLogout()
                 }
                 else if(item.title == 'Rate Cupigo!'){
 setRattingModal(true)

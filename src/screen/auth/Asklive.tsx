@@ -7,6 +7,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
+import { errorToast } from '../../configs/customToast';
 
 export default function Asklive() {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ export default function Asklive() {
 
   const handleNext = () => {
     // Navigate to the next screen with all collected data
+    if (address == '') return errorToast("Enter your City")
     navigation.navigate(ScreenNameEnum.ASK_ABOUT, { username, age, gender, address });
   };
 

@@ -10,6 +10,7 @@ import ScreenNameEnum from '../../routes/screenName.enum';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_quesctions } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
+import { errorToast } from '../../configs/customToast';
 
 export default function Askabout() {
   const navigation = useNavigation();
@@ -62,6 +63,10 @@ export default function Askabout() {
   };
 
   const handleNext = () => {
+    if (!height1 || !height2 || !height3) {
+     return errorToast("Please fill all fields.");
+    }
+    
     const data = {
       username,
       age,
@@ -87,7 +92,7 @@ export default function Askabout() {
       <View style={styles.progressBar}>
         <View style={styles.progressIndicator} />
       </View>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <View style={styles.greetingContainer}>
             <Text style={{fontWeight:'800',fontSize:22,color:'#fff'}}>Some criteria about you ?</Text>
@@ -114,11 +119,14 @@ export default function Askabout() {
             </View>
           ))}
 
-         {isKeyboardOpen && <View  style={{height:hp(10)}} />}
+        
+
           <TouchableOpacity onPress={handleNext} style={styles.button}>
             <Text style={styles.buttonText}>NEXT</Text>
           </TouchableOpacity>
+        
         </View>
+        {isKeyboardOpen && <View  style={{height:hp(20)}} />}
       </ScrollView>
     </LinearGradient>
   );

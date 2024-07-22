@@ -8,12 +8,13 @@ import Message from '../screen/bottomTab/Message';
 import Profile from '../screen/bottomTab/Profile';
 import { image } from '../configs/utils/images';
 import Findmatches from '../screen/bottomTab/Findmatches';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
+const navigation =useNavigation()
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow',
@@ -37,11 +38,14 @@ export default function TabNavigator() {
 
   return (
     <Tab.Navigator
+    initialRouteName='Subscription'
       screenOptions={{
         headerShown: false,
-      
+    
       }}
  tabBar={(props) => <CustomTabBar {...props} />}
+
+ 
     >
      
       <Tab.Screen
