@@ -9,7 +9,6 @@ import ScreenNameEnum from '../../routes/screenName.enum';
 
 const Welcome = () => {
   const navigation = useNavigation();
-
   const isLogOut = useSelector((state) => state.auth.isLogOut);
   const isLogin = useSelector((state) => state.auth.isLogin);
   const isFoucs = useIsFocused();
@@ -26,10 +25,8 @@ const Welcome = () => {
       navigation.navigate(ScreenNameEnum.BOTTOM_TAB);
     }
   }
-
   const isFocused = useIsFocused();
-
-
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       checkLogout();

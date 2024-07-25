@@ -145,17 +145,9 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginHorizontal:10,
     borderRadius:20,
-    shadowColor: "#f0f0f0",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation:2,
+ 
 paddingHorizontal:10,
-    backgroundColor: '#da3dd3',
+backgroundColor:'rgba(255, 255, 255, 0.35)',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -179,7 +171,8 @@ paddingHorizontal:10,
     alignItems: 'center',
     justifyContent: 'center',
     height: 50,
-    borderRadius: 10,
+
+    borderRadius:30,
     width: wp(85),
     paddingHorizontal: 10,
   },

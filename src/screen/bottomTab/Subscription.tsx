@@ -60,8 +60,7 @@ export default function Subscription() {
   const user = useSelector(state => state.auth.User);
   const isFocused = useIsFocused();
 
-  console.log('myPlan',myPlan);
-  
+
   useEffect(() => {
     get_subscription();
   }, [isFocused]);

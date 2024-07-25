@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, TouchableOpacity, Modal, Animated, Text } from
 import Header from '../../configs/Header';
 import { image } from '../../configs/utils/images';
 import { useDispatch, useSelector } from 'react-redux';
-import { matchPersons } from '../../redux/feature/featuresSlice';
+import { clearMatchPersons, matchPersons } from '../../redux/feature/featuresSlice';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import ScreenNameEnum from '../../routes/screenName.enum';
@@ -17,6 +17,19 @@ const FindMatches = () => {
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  useEffect(() => {
+    // If matchPersons has data, start the timer to clear it after 15 seconds
+    console.log('matchPersons.length',matchPersons.length);
+    
+    if (matchPersons.length > 0) {
+      const timer = setTimeout(() => {
+        dispatch(clearMatchPersons());
+      }, 15000); // 15000 milliseconds = 15 seconds
+
+      // Cleanup timer on component unmount or when matchPersons changes
+      return () => clearTimeout(timer);
+    }
+  }, [matchPersons, dispatch]);
 
   useEffect(() => {
     let intervalId;
@@ -25,7 +38,7 @@ const FindMatches = () => {
       intervalId = setInterval(() => {
         const params = { user_id: user?.id };
         dispatch(matchPersons(params));
-      }, 10000);
+      }, 15000);
 
       Animated.loop(
         Animated.sequence([
@@ -51,6 +64,9 @@ const FindMatches = () => {
   };
 
   const saveUserToFirestore = async (user, matchedUser) => {
+
+    console.log('user, matchedUser',user?.id, matchedUser);
+    
     if (!user || !user.id) {
       console.error('User is undefined or invalid');
       return;
@@ -106,7 +122,8 @@ const FindMatches = () => {
           <View style={styles.modalContent}>
             <Animated.View style={[styles.animationContainer, animatedStyle]}>
               <TouchableOpacity onPress={() => findMatches && saveUserToFirestore(user, findMatches)}>
-                <Image source={findMatches !== null?{uri:findMatches?.image}:image.radar} style={[styles.image,{ borderColor:findMatches == null?'#fff':'#FA3EBA',}]} />
+              {findMatches == null && <Image source={image.radar} style={[styles.image,{ }]} />}
+               {findMatches !== null &&<Image source={{uri:findMatches?.image}} style={[styles.image,{ borderColor:findMatches == null?'#fff':'#FA3EBA',}]} />}
               </TouchableOpacity>
               {findMatches&&<Text style={{color:'#FA3EBA',    fontFamily:'Lexend',fontWeight:'700',marginTop:20}}>{findMatches?.first_name}</Text>}
             </Animated.View>

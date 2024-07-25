@@ -159,16 +159,8 @@ paddingVertical:20,
 paddingHorizontal:15,
       borderRadius:10,
      
-      backgroundColor:'#da3dd3',
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-
-      elevation: 5,
+      backgroundColor:'rgba(255, 255, 255, 0.35)',
+     
     
     },
     greetingContainer: {

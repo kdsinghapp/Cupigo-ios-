@@ -17,9 +17,7 @@ const initialState = {
   Question: [],
   user_profile:[]
 };
-const logOut = () => ({
-  type: LOG_OUT
-});
+
 
 export const login = createAsyncThunk(
   'login',
@@ -137,6 +135,51 @@ export const submit_answers = createAsyncThunk(
       return result;
     } catch (error) {
       console.error('submit_answers error:', error);
+      errorToast('Network error');
+      return thunkApi.rejectWithValue(error.message);
+    }
+  },
+);
+export const social_login = createAsyncThunk(
+  'social_login',
+  async (params, thunkApi) => {
+    try {
+      console.log('params', params);
+      
+      let data = new FormData();
+      data.append('email', params.email);
+      data.append('image', params.profile_picture);
+      data.append('username', {
+        uri: params.url, // Assuming profile_picture.url is a file URI
+        type: params.type || 'image/jpeg',
+        name: params.name || 'profile_image.png'
+      });
+      
+   
+
+      const response = await fetch('https://server-php-8-2.technorizen.com/cupigo/api/social_login', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: data
+      });
+
+
+      const result = await response.json();
+      console.log('result.result',result.result);
+ 
+
+      if (result.status === '1') {
+        successToast('User Login Successfuly')
+        params.navigation.navigate(ScreenNameEnum.ASK_NAME);
+      } else {
+        errorToast(result.message || 'Unknown error occurred');
+      }
+      thunkApi.dispatch(loginSuccess(result.result));
+      return result.result;
+    } catch (error) {
+      console.error('social_login error:', error);
       errorToast('Network error');
       return thunkApi.rejectWithValue(error.message);
     }
@@ -278,6 +321,22 @@ const AuthSlice = createSlice({
 
     });
     builder.addCase(login.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.isLogin = false;
+    });
+    builder.addCase(social_login.pending, state => {
+      state.isLoading = true;
+    });
+    builder.addCase(social_login.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.isError = false;
+      state.isLogOut = false;
+
+    });
+    builder.addCase(social_login.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.isSuccess = false;

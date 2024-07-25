@@ -70,37 +70,11 @@ export default function Chat() {
     }
   }, [messages]); // This will run whenever the messages array changes
   
-  const openImagePicker = () => {
-    setShowModal(false); // Close modal first
-    ImagePicker.openPicker({
-      mediaType: 'photo',
-      cropping: true,
-    }).then(image => {
-      console.log(image);
-      // Handle selected image here, e.g., upload or display
-    }).catch(error => {
-      console.log(error);
-    });
-  };
 
-  const openVideoPicker = () => {
-    setShowModal(false); // Close modal first
-    ImagePicker.openPicker({
-      mediaType: 'video',
-    }).then(video => {
-      console.log(video);
-      // Handle selected video here, e.g., upload or display
-    }).catch(error => {
-      console.log(error);
-    });
-  };
-  const toggleEmojiPicker = () => {
-    setShowEmojiPicker(!showEmojiPicker);
-  };
 
-  const onEmojiSelected = (emoji) => {
-    setMessageText(messageText + emoji);
-  };
+
+
+
   useEffect(() => {
     const fetchMessages = async () => {
       const unsubscribe = firestore()
@@ -162,66 +136,8 @@ export default function Chat() {
     setLoading(false);
   };
 
-  const uploadFileToStorage = async (filePath, fileName) => {
-    const reference = storage().ref(fileName);
-    await reference.putFile(filePath);
-    return await reference.getDownloadURL();
-  };
 
-  const sendImage = async () => {
-    setLoading(true);
 
-    try {
-      const image = await ImagePicker.openPicker({
-        mediaType: 'photo',
-        cropping: true,
-      });
-
-      if (image && image.path) {
-        const downloadUrl = await uploadFileToStorage(image.path, `images/${Date.now()}_${user.id}.jpg`);
-
-        const messageData = {
-          image: downloadUrl,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-          mobile: user?.mobile,
-          sender_id: user?.id,
-          receiver_id: item?.id
-        };
-
-        await sendMessage(messageData);
-      }
-    } catch (error) {
-      console.error('Error selecting image: ', error);
-      setLoading(false);
-    }
-  };
-
-  const sendVideo = async () => {
-    setLoading(true);
-
-    try {
-      const video = await ImagePicker.openPicker({
-        mediaType: 'video',
-      });
-
-      if (video && video.path) {
-        const downloadUrl = await uploadFileToStorage(video.path, `videos/${Date.now()}_${user.id}.mp4`);
-
-        const messageData = {
-          video: downloadUrl,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-          mobile: user?.mobile,
-          sender_id: user?.id,
-          receiver_id: item?.id
-        };
-
-        await sendMessage(messageData);
-      }
-    } catch (error) {
-      console.error('Error selecting video: ', error);
-      setLoading(false);
-    }
-  };
 
 
 
@@ -315,6 +231,7 @@ export default function Chat() {
 
           <TextInput
   style={styles.textInput}
+  placeholderTextColor={'#000'}
   placeholder="Type a message"
   value={messageText}
   onChangeText={setMessageText}
@@ -490,12 +407,13 @@ marginRight:15
     borderTopColor: '#ccc',
     height:75
   },
-  textInput: {    fontFamily:'Lexend'},
+  textInput: {    color:'#000',    fontFamily:'Lexend'},
   messageImage: {
     width: 200,
     height: 200,
     borderRadius: 10,
     marginTop: 10,
+
   },
   messageVideo: {
     width: 200,

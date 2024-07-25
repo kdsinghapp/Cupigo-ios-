@@ -946,6 +946,12 @@ PODS:
     - abseil/meta/type_traits
     - abseil/xcprivacy
   - abseil/xcprivacy (1.20240116.2)
+  - AppAuth (1.7.5):
+    - AppAuth/Core (= 1.7.5)
+    - AppAuth/ExternalUserAgent (= 1.7.5)
+  - AppAuth/Core (1.7.5)
+  - AppAuth/ExternalUserAgent (1.7.5):
+    - AppAuth/Core
   - boost (1.83.0)
   - BoringSSL-GRPC (0.0.32):
     - BoringSSL-GRPC/Implementation (= 0.0.32)
@@ -1116,6 +1122,10 @@ PODS:
   - GoogleMaps/Base (7.4.0)
   - GoogleMaps/Maps (7.4.0):
     - GoogleMaps/Base
+  - GoogleSignIn (7.1.0):
+    - AppAuth (< 2.0, >= 1.7.3)
+    - GTMAppAuth (< 5.0, >= 4.1.1)
+    - GTMSessionFetcher/Core (~> 3.3)
   - GoogleUtilities (7.13.3):
     - GoogleUtilities/AppDelegateSwizzler (= 7.13.3)
     - GoogleUtilities/Environment (= 7.13.3)
@@ -1238,6 +1248,9 @@ PODS:
     - gRPC-Core/Privacy (= 1.62.5)
   - gRPC-Core/Interface (1.62.5)
   - gRPC-Core/Privacy (1.62.5)
+  - GTMAppAuth (4.1.1):
+    - AppAuth/Core (~> 1.7)
+    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
   - GTMSessionFetcher/Core (3.5.0)
   - hermes-engine (0.74.3):
     - hermes-engine/Pre-built (= 0.74.3)
@@ -2179,11 +2192,11 @@ PODS:
     - React-debug
   - react-native-date-picker (5.0.4):
     - React-Core
-  - react-native-google-maps (1.15.6):
+  - react-native-google-maps (1.17.1):
     - Google-Maps-iOS-Utils (= 4.2.2)
     - GoogleMaps (= 7.4.0)
     - React-Core
-  - react-native-maps (1.15.6):
+  - react-native-maps (1.17.1):
     - React-Core
   - react-native-netinfo (11.3.2):
     - React-Core
@@ -2492,6 +2505,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNGoogleSignin (12.2.1):
+    - GoogleSignIn (~> 7.1)
+    - React-Core
   - RNImageCropPicker (0.40.3):
     - React-Core
     - React-RCTImage
@@ -2629,6 +2645,7 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -2638,6 +2655,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AppAuth
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAnalytics
@@ -2657,9 +2675,11 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMaps
+    - GoogleSignIn
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
+    - GTMAppAuth
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
@@ -2810,6 +2830,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNGoogleSignin:
+    :path: "../node_modules/@react-native-google-signin/google-signin"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
   RNReanimated:
@@ -2823,6 +2845,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
+  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
@@ -2848,9 +2871,11 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: bb3c564c3efb933136af0e94899e0a46167466a8
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleMaps: 032f676450ba0779bd8ce16840690915f84e57ac
+  GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
   gRPC-Core: eee4be35df218649fe66d721a05a7f27a28f069b
+  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   hermes-engine: 1f547997900dd0752dc0cc0ae6dd16173c49e09b
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
@@ -2881,8 +2906,8 @@ SPEC CHECKSUMS:
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 70da5955150a58732e9336a0c7e71cd49e909f25
   react-native-date-picker: 6891317e850deae5b53d51355226e07a495aba61
-  react-native-google-maps: 7ca1d252585c9ee2bbe2a3f64e4c061801b43d64
-  react-native-maps: 7b2c2cee95271592a92ba485eea1dec66a363a6e
+  react-native-google-maps: 9a19f4a5f3475dcbc898dc1ccd01e846fdf767a0
+  react-native-maps: a469b8e9093ba8613ba238bde2d1152078b6a191
   react-native-netinfo: 076df4f9b07f6670acf4ce9a75aac8d34c2e2ccc
   react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
   react-native-webview: 04168cbda528df7154fdef3086b4644b9e6dd683
@@ -2920,6 +2945,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: 99621af036e0aa85506390f77d79c9e6353aacca
   RNFBStorage: ebf84836d1e919f1fd3fa8d53178e47ca35f186b
   RNGestureHandler: 198bdf2970af12a9fcdd71b5a64d14664a46d2dd
+  RNGoogleSignin: 08dc4ba7eac2096c7fecfe109f0950fa4683c803
   RNImageCropPicker: e7ab6fb43d2fc3e84651e786ef4a080d63b0ed3d
   RNReanimated: f6b214732ff303cb815ac81b26bbfd2070b69f43
   RNScreens: fd2722bcc59f36a629205af8cc7b48e4bc0d09f5
@@ -2928,6 +2954,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: bd92064a0d558be92786820514d74fc4dddd1233
 
-PODFILE CHECKSUM: a7d1c3b1b3248727acf850440c947a953485ed33
+PODFILE CHECKSUM: 9137a9cfba7d0bf7ba623b1e6bc85a270165d8b6
 
 COCOAPODS: 1.15.2

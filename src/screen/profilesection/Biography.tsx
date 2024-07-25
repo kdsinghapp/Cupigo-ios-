@@ -117,9 +117,11 @@ city:city,
             {isEdit ?   <View style={styles.inputWrapper}>
     <TextInput
  editable={isEdit}
-        placeholder='User name'
+        placeholder='enter User name'
+        placeholderTextColor={'#000'}
         value={userName}
         onChangeText={setUserName}
+        style={styles.textInput}
       />
     </View>: <Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{userName}</Text>
     }
@@ -129,9 +131,11 @@ city:city,
             {isEdit ?     <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='gender'
+                placeholder='enter gender'
+                placeholderTextColor={'#000'}
                 value={gender}
                 onChangeText={setGender}
+                style={styles.textInput}
               />
             </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{gender}</Text>
     }
@@ -141,7 +145,9 @@ city:city,
             {isEdit ?       <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='dob'
+                  style={styles.textInput}
+                placeholder='enter dob'
+                placeholderTextColor={'#000'}
                 value={dob}
                 onChangeText={setDob}
               />
@@ -153,7 +159,9 @@ city:city,
             {isEdit ?   <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='address'
+                  style={styles.textInput}
+                placeholder='enter address'
+                placeholderTextColor={'#000'}
                 value={address}
                 onChangeText={setAddress}
               />
@@ -166,7 +174,9 @@ city:city,
             {isEdit ?     <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='city'
+                  style={styles.textInput}
+                placeholder='enter city'
+                placeholderTextColor={'#000'}
                 value={city}
                 onChangeText={setCity}
               />
@@ -178,7 +188,9 @@ city:city,
             {isEdit ?        <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='age'
+                  style={styles.textInput}
+                placeholder='enter age'
+                placeholderTextColor={'#000'}
                 value={age}
                 onChangeText={setAge}
               />
@@ -190,7 +202,9 @@ city:city,
             {isEdit ?       <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='country code'
+                  style={styles.textInput}
+                placeholder='enter country code'
+                placeholderTextColor={'#000'}
                 value={countryCode}
                 onChangeText={setCountryCode}
               />
@@ -202,7 +216,9 @@ city:city,
             {isEdit ?       <View style={styles.inputWrapper}>
               <TextInput
                   editable={isEdit}
-                placeholder='mobile'
+                  style={styles.textInput}
+                  placeholderTextColor={'#000'}
+                placeholder='enter mobile'
                 value={mobile}
                 onChangeText={setMobile}
               />
@@ -224,6 +240,8 @@ city:city,
 }
 
 const styles = StyleSheet.create({
+  textInput:{
+color:'#000',fontWeight:'500',fontSize:14  },
   title: {
     fontSize: 18,
   

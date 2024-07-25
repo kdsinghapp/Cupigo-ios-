@@ -89,18 +89,8 @@ const styles = StyleSheet.create({
  paddingHorizontal:10,
     borderRadius:10,
 
-
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
   
-      elevation: 5,
-  
-  backgroundColor:'#da3dd3',
+      backgroundColor:'rgba(255, 255, 255, 0.35)',
   },
   greetingContainer: {
     flexDirection: 'row',
@@ -124,18 +114,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 20,
     paddingVertical: 15,
-    borderRadius: 10,
+    
     marginTop: 10,
-    width: wp(80),
+
+    borderRadius:30,
+    width: wp(85),
     alignItems: 'center',
   },
   selectedButton: {
     backgroundColor: '#BD0DF4',
     paddingHorizontal: 20,
     paddingVertical: 15,
-    borderRadius: 10,
+
     marginTop: 10,
-    width: wp(80),
+
+    borderRadius:30,
+    width: wp(85),
     alignItems: 'center',
   },
   genderText: {

@@ -92,17 +92,9 @@ height:30,width:30
     justifyContent: 'center',
   
     borderRadius:10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+   
 paddingHorizontal:10,
-    backgroundColor: '#da3dd3',
+backgroundColor:'rgba(255, 255, 255, 0.35)',
   },
   greetingContainer: {
     flexDirection: 'row',
@@ -120,8 +112,9 @@ paddingHorizontal:10,
     flexDirection: 'row',
     alignItems: 'center',
     height: 55,
-    borderRadius: 10,
-    width: wp(80),
+
+    borderRadius:30,
+    width: wp(85),
     paddingHorizontal: 10,
   },
   input: {
@@ -130,7 +123,8 @@ paddingHorizontal:10,
     flex: 1,
     width:'90%',
     marginLeft:10,
-    fontFamily:'Lexend'
+    fontFamily:'Lexend',
+    color:'#000'
   },
   button: {
     backgroundColor: colors.btnColor,

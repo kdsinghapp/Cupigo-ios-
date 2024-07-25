@@ -86,6 +86,8 @@ const handleAnswerChange = (questionId, text) => {
           <TextInput
             editable={isEdit} // Control whether the input is editable based on isEdit state
             placeholder={`Answer for ${item.question}`}
+        
+            placeholderTextColor={'#000'}
             value={answerText}
             onChangeText={(text) => handleAnswerChange(item.question_id, text)}
             style={styles.input}
@@ -162,6 +164,8 @@ const handleAnswerChange = (questionId, text) => {
 }
 
 const styles = StyleSheet.create({
+  textInput:{
+    color:'#000',fontWeight:'500',fontSize:14  },
   headerText: {
     flex: 1,
     textAlign: 'center',

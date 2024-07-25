@@ -49,7 +49,7 @@ const Distance = () => {
   return (
     <View style={styles.container}>
      
-      <View style={{justifyContent:'center',height:60,alignItems:'center',marginTop: Platform.OS == 'android' ?5 :30}}>
+      <View style={{justifyContent:'center',height:60,alignItems:'center',marginTop: Platform.OS == 'ios' ?50 :5}}>
 
       <Text style={styles.title}>Distance</Text>
       <TouchableOpacity

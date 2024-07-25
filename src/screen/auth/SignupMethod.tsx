@@ -1,50 +1,81 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { image } from '../../configs/utils/images';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { useNavigation } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
-
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 
-import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../redux/feature/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess, social_login } from '../../redux/feature/authSlice';
 import { errorToast } from '../../configs/customToast';
+import Loading from '../../configs/Loader';
 
 
 const SignupMethod = ({  }) => {
-  
+  const isLoading = useSelector(state => state.auth.isLoading);
+  useEffect(() => {
+    // Configure Google Sign-In
+    GoogleSignin.configure({
+      webClientId: '438738743028-fr1s2rrijn8qos6cnsqtkfm7q8dp6ttq.apps.googleusercontent.com', // From Google Cloud Console
+    });
+  }, []);
+
+
    const dispatch = useDispatch();
    const navigation = useNavigation();
 
    async function onGoogleButtonPress() {
-    errorToast('this feature is currently under maintenance')
-  //   try {
-  //     // Check if your device supports Google Play
-  //     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-  //     // Get the users ID token
-  //     const { idToken } = await GoogleSignin.signIn();
+   
+    try {
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      // Get the users ID token
+      const { idToken } = await GoogleSignin.signIn();
       
-  //     // Create a Google credential with the token
-  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       
-  //     // Sign-in the user with the credential
-  //     const userCredential = await auth().signInWithCredential(googleCredential);
+      // Sign-in the user with the credential
+      const data = await auth().signInWithCredential(googleCredential);
 
-  //     // Dispatch action to update Redux state
-  //     dispatch(loginSuccess(true));
+      // Check if `data` and its properties are defined
+      const email = (data && data.profile && data.profile.email) || (data && data.user && data.user.email);
+      const userName = (data && data.user && data.user.displayName) || (data && data.profile && data.profile.name);
+      const profileImage = (data && data.user && data.user.photoURL) || (data && data.profile && data.profile.picture);
+    
 
-  //     // Navigate to your bottom tab screen
-  //     navigation.navigate(ScreenNameEnum.BOTTOM_TAB); // Replace with your bottom tab screen name
-  //   } catch (error) {
-  //     console.error('Google sign in error:', error);
-  //     // Handle error if necessary
-  //   }
+    
+      const params = {
+        navigation:navigation,
+        email: email || 'No email found',
+        user_name: userName || 'No name found',
+        url: profileImage || 'No image found',
+        type: 'image/jpeg', // Adjust if needed
+        name: `image${(email || 'unknown').replace('@', '_').replace('.', '_')}.png`,
+      };
+    
+      
+      if(email && userName && profileImage){
+        dispatch(social_login(params))
+      } 
+      console.log('userCredential', params);
+    
+// dispatch(social_login(params))
+      
+    } catch (error) {
+      console.error('Google sign in error:', error);
+      // Handle error if necessary
+    }
   }
-
+  async function onFacebookButtonPress() {
+    
+  }
   return (
     <View style={styles.container}>
+         {isLoading?<Loading />:null}
       <StatusBar barStyle="light-content" />
       <LinearGradient
         colors={['#BD0DF4', '#FA3EBA']}
@@ -56,21 +87,17 @@ const SignupMethod = ({  }) => {
         </View>
         <View
       style={{
-        backgroundColor:'#da3dd3',
-            shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-
-            elevation: 5,
+        backgroundColor:'rgba(255, 255, 255, 0.35)',
+      
+           
 
             borderRadius: 10, paddingVertical:20,width: wp(90), padding:15
           }}>
           <Text style={styles.welcomeText}>Hello, <Text style={[styles.welcomeText, { fontWeight: '500' ,    fontFamily:'Lexend'}]}>Welcome</Text> </Text>
-          <TouchableOpacity style={[styles.button, { marginTop: 50 }]} onPress={() => {errorToast('this feature is currently under maintenance') }}>
+          <TouchableOpacity 
+          
+          onPress={() => onFacebookButtonPress().then(() => console.log('Signed in with Facebook!'))}
+          style={[styles.button, { marginTop: 50 }]} >
             <Image source={image.F_icon} style={{ height: 30, width: 30 }} />
             <Text style={styles.buttonText}>Sign with Facebook</Text>
           </TouchableOpacity>
@@ -132,7 +159,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     flexDirection: 'row',
     paddingHorizontal: 50,
-    borderRadius: 10,
+    borderRadius:30,
     marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center'

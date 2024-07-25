@@ -7,6 +7,7 @@ import ScreenNameEnum from '../../routes/screenName.enum';
 import AddRatingModal from '../modal/RattingModal';
 import { useDispatch } from 'react-redux';
 import { logoutSuccess } from '../../redux/feature/authSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
     
     const options = [
       { id: '1', title: 'Biography',screen:ScreenNameEnum.BIOGRAPHY },
@@ -39,9 +40,13 @@ const handleLogout = () => {
         text: 'OK',
         onPress: async () => {
           try {
+            // Clear AsyncStorage
+            await AsyncStorage.clear();
+
             // Dispatch logout action
-            dispatch(logoutSuccess())
-            // Navigate to SIGNUP_METHOD after logout
+            dispatch(logoutSuccess());
+           
+            // Navigate to the sign-up method screen
             navigation.navigate(ScreenNameEnum.SIGNUP_METHOD);
           } catch (error) {
             console.error("Error during logout: ", error);

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_quesctions } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
 import { errorToast } from '../../configs/customToast';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export default function Asklooking() {
   const navigation = useNavigation();
@@ -19,7 +20,19 @@ export default function Asklooking() {
   const isLoading = useSelector(state => state.auth.isLoading);
   const Question = useSelector(state => state.auth.Question);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
+  const data = [
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
+  ];
+  const data2 = [
+    { label: 'Small to Medium (1m50 - 1m70)', value: 'Small to Medium (1m50 - 1m70)' },
+    { label: 'Medium to Tall (1m71 - 1m90)', value: 'Medium to Tall (1m71 - 1m90)' },
+  ];
+  const data3 = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' },
+    { label: 'Other', value: 'other' },
+  ];
   // State variables for input fields
   const [genre, setGenre] = useState('');
   const [idealSize, setIdealSize] = useState('');
@@ -98,11 +111,13 @@ export default function Asklooking() {
         <View style={styles.contentContainer}>
           {AboutQuestion?.map((question, index) => (
             <View key={index} style={{ marginBottom: 20 }}>
-              <Text style={[styles.greetingText, { fontSize: 18, width: '80%',    fontFamily:'Lexend' }]}>
+              <View style={{width:'90%',paddingHorizontal:10}}>
+              <Text style={[styles.greetingText, { fontSize: 18,  fontFamily:'Lexend' }]}>
                 {question.question}
               </Text>
+              </View>
               <View style={styles.inputContainer}>
-                <TextInput
+                {/* <TextInput
                   placeholderTextColor={'#BD0DF4'}
                   style={styles.input}
                   placeholder={`Enter ${question.question}`}
@@ -114,7 +129,32 @@ export default function Asklooking() {
                     else if (index === 1) setIdealSize(text);
                     else if (index === 2) setIdealWeight(text);
                   }}
-                />
+                /> */}
+                   <Dropdown
+               style={styles.dropdown}
+               data={index == 1?data2:index ==2?data:data3}
+               labelField="label"
+               valueField="value"
+               selectedTextStyle={{
+                color:'#000',
+                fontWeight:'600'
+               }}
+               placeholder="Select an option"
+               placeholderStyle={{
+                color:'#BD0DF4',
+                fontWeight:'600'
+               }}
+               itemTextStyle={{
+                color:'#BD0DF4',
+                fontWeight:'600'
+               }}
+               value={index == 0?genre:index ==1?idealSize:idealWeight}
+               onChange={item =>{
+                if (index === 0) setGenre(item.value);
+                else if (index === 1) setIdealSize(item.value);
+                else if (index === 2) setIdealWeight(item.value);
+               }}
+             />
               </View>
            
             </View>
@@ -132,6 +172,14 @@ export default function Asklooking() {
 }
 
 const styles = StyleSheet.create({
+  dropdown: {
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    width: wp(85),
+    paddingHorizontal: 10,
+    marginTop: 10,
+    height: 50,
+  },
   scrollViewContent: {
     flexGrow: 1,
   },
@@ -162,17 +210,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     borderRadius:20,
-    shadowColor: "#f0f0f0",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation:2,
+  
 paddingHorizontal:10,
-    backgroundColor: '#da3dd3',
+backgroundColor:'rgba(255, 255, 255, 0.35)',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -189,20 +229,22 @@ paddingHorizontal:10,
     fontFamily:'Lexend'
   },
   inputContainer: {
-    backgroundColor: '#fff',
+
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
-    borderRadius:15,
-    width: wp(80),
-    paddingHorizontal: 10,
+
+    borderRadius:30,
+    width: wp(85),
+
   },
   input: {
     fontSize: 14,
     fontWeight: '600',
     flex: 1,
-    fontFamily:'Lexend'
+    fontFamily:'Lexend',
+    color:'#000'
   },
   button: {
     backgroundColor: colors.btnColor,

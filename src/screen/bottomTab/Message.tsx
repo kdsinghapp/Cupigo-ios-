@@ -1,47 +1,70 @@
-import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, FlatList, TouchableOpacity, Platform } from 'react-native';
-
 import LinearGradient from 'react-native-linear-gradient';
-
 import Search from '../../assets/svg/search.svg';
 import { useNavigation } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
-import  firestore  from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
+import { useSelector } from 'react-redux';
+
 const Message = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
   const [matches, setMatches] = useState([]);
-
+  const [filteredMatches, setFilteredMatches] = useState([]);
+  const user = useSelector(state => state.auth.User);
   useEffect(() => {
     const fetchMatches = async () => {
       try {
-        const matchesSnapshot = await firestore().collection('matches').get();
-        const matchesData = matchesSnapshot.docs.map(doc => {
-          const contacts = doc.data().contacts || [];
-          return contacts.map(contact => ({
-            id: contact.id,
-            image: contact.userImage, // Adjusted based on your Firestore field
-            name: contact.userName, // Adjusted based on your Firestore field
-          }));
-        }).flat(); // Flatten the array of arrays into a single array
-        setMatches(matchesData);
-        console.log('matchesData',matchesData);
+        // Assuming you have a way to get the current user's ID
+        const currentUserId = user?.id; // Replace with actual method to get user ID
+    
+        // Fetch the current user's document from Firestore
+        const userDoc = await firestore().collection('matches').doc(currentUserId).get();
         
+        if (userDoc.exists) {
+          const userContacts = userDoc.data().contacts || [];
+    
+          // Transform contacts data
+          const matchesData = userContacts.map(contact => ({
+            id: contact.id,
+            image: contact.userImage,
+            name: contact.userName,
+            message: contact.message || '', // Assuming `message` might not be part of `contacts`
+            time: contact.time || '', // Assuming `time` might not be part of `contacts`
+            unread: contact.unread || 0, // Assuming `unread` might not be part of `contacts`
+          }));
+    
+          setMatches(matchesData);
+          setFilteredMatches(matchesData); // Set initial filtered matches
+        } else {
+          console.log('No matches found for the current user.');
+        }
       } catch (error) {
         console.error('Error fetching matches:', error);
       }
     };
+    
 
     fetchMatches();
   }, []);
-  console.log('matches',matches);
-  
+
+  useEffect(() => {
+    if (searchQuery) {
+      const filtered = matches.filter(match =>
+        match.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredMatches(filtered);
+    } else {
+      setFilteredMatches(matches);
+    }
+  }, [searchQuery, matches]);
+
   return (
     <View style={styles.container}>
-          <View style={{height:Platform.OS == 'ios'?32:0}} />
+      <View style={{ height: Platform.OS === 'ios' ? 32 : 0 }} />
       <Text style={styles.headerText}>Message</Text>
-      
+
       <View style={styles.searchInput}>
         <Search />
         <TextInput
@@ -51,71 +74,62 @@ const Message = () => {
           onChangeText={text => setSearchQuery(text)}
         />
       </View>
-      {matches.length > 0 ?
-      <>
-      <Text style={styles.sectionTitle}>New Matches</Text>
-      <View style={{ height:80}}>
-        <FlatList
-          horizontal
-          data={matches}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => {
-                // Navigate to match details or chat screen
-                navigation.navigate(ScreenNameEnum.CHAT_SCREEN,{item:item});
-              }}
-              style={[{ borderWidth: 2, borderColor: '#fff' }, styles.matchImage]}
-            >
-              <Image source={{ uri: item.image }} resizeMode="contain" style={{ height: 50, width: 50, borderRadius: 25 }} />
-              <View style={{ height: 8, width: 8, borderRadius: 4, right: 0, top: 5, backgroundColor: '#BFFF6F', position: 'absolute' }} />
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
-      <Text style={styles.sectionTitle}>Messages</Text>
-      <FlatList
-        data={matches}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => {
-              // Navigate to chat screen with user details
-              navigation.navigate(ScreenNameEnum.CHAT_SCREEN,{item:item}); // Pass userId or other details as needed
-            }}
-            style={styles.messageItem}
-          >
-            {/* Replace with actual user image from Firestore */}
-            <TouchableOpacity
-            onPress={()=>{
-              navigation.navigate(ScreenNameEnum.UserProfile)
-            }}
-            >
-            <Image source={{ uri:item.image  }} style={styles.userImage} />
-            </TouchableOpacity>
-            <View style={styles.messageLeft}>
-              <View>
-                <Text style={styles.userName}>{item.name}</Text>
-                <Text style={styles.userMessage}>{item.message}</Text>
-              </View>
-            </View>
-            <View style={styles.messageRight}>
-              <Text style={styles.messageTime}>{item.time}</Text>
-              {item.unread > 0 && (
-                <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={styles.unreadBadge}>
-                  <Text style={styles.unreadText}>{item.unread}</Text>
-                </LinearGradient>
+
+      {filteredMatches.length > 0 ? (
+        <>
+          <Text style={styles.sectionTitle}>New Matches</Text>
+          <View style={styles.matchesContainer}>
+            <FlatList
+              horizontal
+              data={filteredMatches}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate(ScreenNameEnum.CHAT_SCREEN, { item: item })}
+                  style={styles.matchImage}
+                >
+                  <Image source={{ uri: item.image }} resizeMode="contain" style={styles.matchImageContent} />
+                  <View style={styles.onlineIndicator} />
+                </TouchableOpacity>
               )}
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-      />
-      </>:<View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-        <Text style={{color:'#000'}}>No Contact Found</Text>
+        
+              showsHorizontalScrollIndicator={false}
+            />
+          </View>
+
+          <Text style={styles.sectionTitle}>Messages</Text>
+          <FlatList
+            data={filteredMatches}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate(ScreenNameEnum.CHAT_SCREEN, { item: item })}
+                style={styles.messageItem}
+              >
+                <TouchableOpacity onPress={() => navigation.navigate(ScreenNameEnum.UserProfile)}>
+                  <Image source={{ uri: item.image }} style={styles.userImage} />
+                </TouchableOpacity>
+                <View style={styles.messageLeft}>
+                  <Text style={styles.userName}>{item.name}</Text>
+                  <Text style={styles.userMessage}>{item.message}</Text>
+                </View>
+                <View style={styles.messageRight}>
+                  <Text style={styles.messageTime}>{item.time}</Text>
+                  {item.unread > 0 && (
+                    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={styles.unreadBadge}>
+                      <Text style={styles.unreadText}>{item.unread}</Text>
+                    </LinearGradient>
+                  )}
+                </View>
+              </TouchableOpacity>
+            )}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+          />
+        </>
+      ) : (
+        <View style={styles.noContactsContainer}>
+          <Text style={styles.noContactsText}>No Contact Found</Text>
         </View>
-      }
+      )}
     </View>
   );
 };
@@ -132,29 +146,48 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
     color: '#5A2D82',
-    fontFamily:'Lexend'
+    fontFamily: 'Lexend',
   },
   searchInput: {
     backgroundColor: 'white',
-    borderRadius:15,
+    borderRadius: 15,
     paddingHorizontal: 15,
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
-    height:45
+    height: 45,
   },
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
     marginBottom: 10,
-    fontFamily:'Lexend'
+    fontFamily: 'Lexend',
+  },
+  matchesContainer: {
+    height: 80,
   },
   matchImage: {
     width: 55,
     height: 55,
     borderRadius: 27.5,
     marginRight: 10,
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  matchImageContent: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+  },
+  onlineIndicator: {
+    height: 8,
+    width: 8,
+    borderRadius: 4,
+    right: 0,
+    top: 5,
+    backgroundColor: '#BFFF6F',
+    position: 'absolute',
   },
   messageItem: {
     flexDirection: 'row',
@@ -174,13 +207,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   userName: {
-    fontFamily:'Lexend',
+    fontFamily: 'Lexend',
     fontSize: 16,
     fontWeight: 'bold',
     color: '#000',
   },
   userMessage: {
-    fontFamily:'Lexend',
+    fontFamily: 'Lexend',
     fontSize: 14,
     color: 'gray',
   },
@@ -190,7 +223,7 @@ const styles = StyleSheet.create({
   messageTime: {
     fontSize: 12,
     color: 'gray',
-    fontFamily:'Lexend'
+    fontFamily: 'Lexend',
   },
   unreadBadge: {
     backgroundColor: '#5A2D82',
@@ -202,7 +235,15 @@ const styles = StyleSheet.create({
   unreadText: {
     color: 'white',
     fontSize: 12,
-    fontFamily:'Lexend'
+    fontFamily: 'Lexend',
+  },
+  noContactsContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noContactsText: {
+    color: '#000',
   },
 });
 

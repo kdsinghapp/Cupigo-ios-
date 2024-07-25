@@ -11,8 +11,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_quesctions } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
 import { errorToast } from '../../configs/customToast';
-
+import { Dropdown } from 'react-native-element-dropdown';
 export default function Askabout() {
+const data = [
+  { label: 'Yes', value: 'Yes' },
+  { label: 'No', value: 'No' },
+];
+const data2 = [
+  { label: 'Small to Medium (1m50 - 1m70)', value: 'Small to Medium (1m50 - 1m70)' },
+  { label: 'Medium to Tall (1m71 - 1m90)', value: 'Medium to Tall (1m71 - 1m90)' },
+];
+
+const [activity, setActivity] = useState(null);
+
+// Add this inside your `getQuestions` function or wherever appropriate
+const additionalQuestions ='What are your hobbies ?'
+
   const navigation = useNavigation();
   const route = useRoute();
   const { username, age, gender, address } = route.params; // Receive data from previous screens
@@ -99,23 +113,48 @@ export default function Askabout() {
           </View>
           {AboutQuestion?.map((question, index) => (
             <View key={index} style={{}}>
-              <Text style={[{ fontFamily:'Lexend',fontSize: 18, width: '80%',marginVertical:10,color:'#fff',fontWeight:'700',lineHeight:20 }]}>
+            <View style={{width:'90%',paddingHorizontal:10}}> 
+              <Text style={[{ fontFamily:'Lexend',fontSize: 18, 
+              marginVertical:10,color:'#fff',fontWeight:'700',lineHeight:20 }]}>
                 {question.question}
               </Text>
-              <View style={styles.inputContainer}>
+              </View>
+             {question.question == additionalQuestions ? <View style={styles.inputContainer}>
                 <TextInput
                   placeholderTextColor={'#BD0DF4'}
                 
                   style={styles.input}
-                  placeholder={`Enter ${question.question}`}
+                  placeholder={`Enter here`}
                   value={index === 0 ? height1 : index === 1 ? height2 : height3}
-                  onChangeText={text => {
-                    if (index === 0) setHeight1(text);
-                    else if (index === 1) setHeight2(text);
-                    else if (index === 2) setHeight3(text);
+                  onChangeText={text => {              
+                    if (index === 2) setHeight3(text);
                   }}
                 />
-              </View>
+              </View>:
+               <Dropdown
+               style={styles.dropdown}
+               data={index == 1?data:data2}
+               labelField="label"
+               valueField="value"
+               selectedTextStyle={{
+                color:'#000',
+                fontWeight:'600'
+               }}
+               placeholder="Select an option"
+               placeholderStyle={{
+                color:'#BD0DF4',
+                fontWeight:'600'
+               }}
+               itemTextStyle={{
+                color:'#BD0DF4',
+                fontWeight:'600'
+               }}
+               value={index == 0?height1:height2}
+               onChange={item =>{
+                if (index === 0) setHeight1(item.value);
+                else if (index === 1) setHeight2(item.value)}}
+             />
+              }
             </View>
           ))}
 
@@ -133,6 +172,14 @@ export default function Askabout() {
 }
 
 const styles = StyleSheet.create({
+  dropdown: {
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    width: wp(85),
+    paddingHorizontal: 10,
+    marginTop: 10,
+    height: 50,
+  },
   scrollViewContent: {
     flexGrow: 1,
   },
@@ -163,17 +210,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     borderRadius:20,
-    shadowColor: "#f0f0f0",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
 
-    elevation:2,
 paddingHorizontal:10,
-    backgroundColor: '#da3dd3',
+backgroundColor:'rgba(255, 255, 255, 0.35)',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -192,8 +231,9 @@ paddingHorizontal:10,
     flexDirection: 'row',
     alignItems: 'center',
     height: 50,
-    borderRadius: 15,
-    width: wp(80),
+
+    borderRadius:30,
+    width: wp(85),
     paddingHorizontal: 10,
     marginTop:10,
   },
@@ -201,7 +241,8 @@ paddingHorizontal:10,
     fontSize: 14,
     fontWeight: '600',
     flex: 1,
-    fontFamily:'Lexend'
+    fontFamily:'Lexend',
+    color:'#000'
   },
   button: {
     backgroundColor: colors.btnColor,

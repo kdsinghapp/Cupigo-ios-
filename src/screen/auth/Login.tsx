@@ -106,17 +106,9 @@ const styles = StyleSheet.create({
     width: 80,
   },
   contentContainer: {
-    shadowColor: "#000",
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
+    
 
-            elevation: 5,
-
-    backgroundColor:'#da3dd3',
+            backgroundColor:'rgba(255, 255, 255, 0.35)',
 paddingVertical:20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -147,8 +139,8 @@ paddingVertical:20,
     flexDirection: 'row',
     alignItems: 'center',
     height: 55,
-    borderRadius: 10,
-    width: wp(80),
+    borderRadius:30,
+    width: wp(85),
     paddingHorizontal: 10,
   },
   input: {
@@ -157,7 +149,8 @@ paddingVertical:20,
     flex: 1,
     marginLeft: 5,
     marginTop: 1,
-    width:'80%'
+    width:'80%',
+    color:'#000'
   },
   button: {
     backgroundColor: colors.btnColor,

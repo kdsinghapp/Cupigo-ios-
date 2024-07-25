@@ -13,7 +13,7 @@ const initialState = {
   isSuccess: false,
   SubscriptionPlan: null,
   PayMentStatus: null,
-  matchPersons:null,
+  matchPersons:[],
   privacy_policy: [],
   general_conditions: [],
   NearByUser: [],
@@ -61,7 +61,6 @@ export const get_que_ans = createAsyncThunk(
         method: 'POST',
         body: fromData,
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
       });
@@ -515,7 +514,12 @@ export const getNearBy = createAsyncThunk(
 const FeatureSlice = createSlice({
   name: 'featureSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    clearMatchPersons(state,action) {
+      state.matchPersons = null;
+    },
+
+  },
   extraReducers: builder => {
 
 
@@ -698,5 +702,5 @@ const FeatureSlice = createSlice({
 
   },
 });
-
+export const {  clearMatchPersons } = FeatureSlice.actions;
 export default FeatureSlice.reducer;

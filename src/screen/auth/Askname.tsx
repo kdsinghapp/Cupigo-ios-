@@ -46,7 +46,7 @@ export default function Askname() {
             onChangeText={setUsername}
           />
         </View>
-        <TouchableOpacity onPress={handleNext} style={styles.button}>
+        <TouchableOpacity onPress={()=>{handleNext()}} style={styles.button}>
           <Text style={styles.buttonText}>NEXT</Text>
         </TouchableOpacity>
       </View>
@@ -85,17 +85,9 @@ marginBottom:10
     borderRadius: 20,
   },
   contentContainer: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
 
-    elevation: 5,
 
-backgroundColor:'#da3dd3',
+    backgroundColor:'rgba(255, 255, 255,  0.35)',
 marginTop:20,
 paddingVertical:20,
     alignItems: 'center',
@@ -122,8 +114,8 @@ paddingVertical:20,
     alignItems: 'center',
     height: 50,
 
-    borderRadius: 15,
-    width: wp(80),
+    borderRadius:30,
+    width: wp(85),
     paddingHorizontal: 10,
   },
   userIcon: {
@@ -135,7 +127,8 @@ paddingVertical:20,
     fontWeight: '600',
     flex: 1,
     marginLeft:10,
-    fontFamily:'Lexend'
+    fontFamily:'Lexend',
+    color:'#000'
   },
   button: {
     backgroundColor: colors.btnColor,

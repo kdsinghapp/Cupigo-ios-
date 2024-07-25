@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 const RegistrationRoutes: FunctionComponent = () => {
   return (
     <Stack.Navigator
-      initialRouteName={ScreenNameEnum.SPLASH_SCREEN}
+    
       screenOptions={{
         headerShown: false,
         gestureEnabled: true,
