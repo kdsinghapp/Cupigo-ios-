@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { View, Image, StyleSheet, ImageSourcePropType } from 'react-native';
+import { View, Image, StyleSheet,Text, ImageSourcePropType } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
 import { image } from '../../configs/utils/images';
 import { useSelector } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 interface SplashScreenProps {
 
@@ -31,25 +32,30 @@ const SplashScreen: React.FC<SplashScreenProps> = (props) => {
 
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={image.appLogo}
-        style={styles.logo}
-      />
-    </View>
+    <LinearGradient
+    colors={['#BD0DF4', '#FA3EBA']}
+    style={styles.background}
+  >
+      <Text style={styles.shadowText}>Welcome to Cupigo!</Text>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ffe4fa',
+  background: {
     flex: 1,
-    justifyContent: 'center',
+    paddingHorizontal:40,
+justifyContent:'center',
     alignItems: 'center',
   },
-  logo: {
-    height: 100,
-    width: 100,
+  shadowText: {
+    fontSize: 50,
+    fontWeight: '800',
+    color: '#ff9bd9',
+    textShadowColor: '#FF00FF',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+    fontFamily:'LeagueSpartan-SemiBold'
   },
 });
 

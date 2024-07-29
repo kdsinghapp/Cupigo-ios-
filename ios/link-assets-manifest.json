@@ -6,6 +6,10 @@
       "sha1": "4e77868439280fb434d4697c7b911271406c81f3"
     },
     {
+      "path": "src/assets/Fonts/DemiBold.ttf",
+      "sha1": "50c1feb02429128847b468d985072dce8a6aeb16"
+    },
+    {
       "path": "src/assets/Fonts/Entypo.ttf",
       "sha1": "12b5670eb178138f77285d5f2c246d3cc5fa67d6"
     },
@@ -54,8 +58,16 @@
       "sha1": "4b2bce6c792493a4a5716b6fec2dbefe89492c3f"
     },
     {
+      "path": "src/assets/Fonts/FuturaBQ.ttf",
+      "sha1": "50c1feb02429128847b468d985072dce8a6aeb16"
+    },
+    {
       "path": "src/assets/Fonts/Ionicons.ttf",
       "sha1": "86e07c3d974eb09099e6e5a9b3b8310303cf0feb"
+    },
+    {
+      "path": "src/assets/Fonts/LeagueSpartan.ttf",
+      "sha1": "525b6f85486f4f42f06e71b1aa67305c32e3f2b3"
     },
     {
       "path": "src/assets/Fonts/Lexend.ttf",
@@ -74,6 +86,10 @@
       "sha1": "56acefc0731f35ee23b195b1c8cb5fa94a0db97b"
     },
     {
+      "path": "src/assets/Fonts/Poppins.ttf",
+      "sha1": "875cf0cecd647bcf22e79d633d868c1b1ec98dfa"
+    },
+    {
       "path": "src/assets/Fonts/Recoleta-Medium.ttf",
       "sha1": "1b810ed984ced65a641f8a6bee4c2aeaa3660a40"
     },
@@ -88,6 +104,10 @@
     {
       "path": "src/assets/Fonts/SimpleLineIcons.ttf",
       "sha1": "9ffb81a5a11112e292f2cc323e98486bad597599"
+    },
+    {
+      "path": "src/assets/Fonts/VariableFont.ttf",
+      "sha1": "525b6f85486f4f42f06e71b1aa67305c32e3f2b3"
     },
     {
       "path": "src/assets/Fonts/Zocial.ttf",

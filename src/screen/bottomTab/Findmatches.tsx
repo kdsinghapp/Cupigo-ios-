@@ -15,6 +15,8 @@ const FindMatches = () => {
   const findMatches = useSelector(state => state.feature.matchPersons);
   const user = useSelector(state => state.auth.User);
 
+
+
   const dispatch = useDispatch();
   const navigation = useNavigation();
   useEffect(() => {
@@ -24,7 +26,7 @@ const FindMatches = () => {
     if (matchPersons.length > 0) {
       const timer = setTimeout(() => {
         dispatch(clearMatchPersons());
-      }, 15000); // 15000 milliseconds = 15 seconds
+      }, 1000); // 15000 milliseconds = 15 seconds
 
       // Cleanup timer on component unmount or when matchPersons changes
       return () => clearTimeout(timer);
@@ -38,7 +40,7 @@ const FindMatches = () => {
       intervalId = setInterval(() => {
         const params = { user_id: user?.id };
         dispatch(matchPersons(params));
-      }, 15000);
+      }, 20000);
 
       Animated.loop(
         Animated.sequence([
@@ -48,6 +50,7 @@ const FindMatches = () => {
       ).start();
     } else {
       clearInterval(intervalId);
+      
       animation.stopAnimation();
       animation.setValue(0);
     }
@@ -97,7 +100,31 @@ const FindMatches = () => {
           }],
         });
       }
-      console.log('User saved to Firestore successfully');
+
+
+      const userDoc2 = await firestore().collection('matches').doc(matchedUser.id).get();
+      if (userDoc2.exists) {
+        const userContacts = userDoc2.data().contacts || [];
+        if (!userContacts.some(contact => contact.id === user.id)) {
+          userContacts.push({
+            id:user.id || '',
+            userName: user.user_name || 'Unknown',
+            userImage: user.image || '',
+          });
+          await firestore().collection('matches').doc(matchedUser.id).update({ contacts: userContacts });
+        }
+      } else {
+        await firestore().collection('matches').doc(matchedUser.id).set({
+          contacts: [{
+            id: user.id || '',
+            userName: user.user_name || 'Unknown',
+            userImage: user.image || '',
+          }],
+        });
+      }
+
+
+
       navigation.navigate(ScreenNameEnum.Message);
       setModalVisible(false);
     } catch (error) {
@@ -122,12 +149,16 @@ const FindMatches = () => {
           <View style={styles.modalContent}>
             <Animated.View style={[styles.animationContainer, animatedStyle]}>
               <TouchableOpacity onPress={() => findMatches && saveUserToFirestore(user, findMatches)}>
-              {findMatches == null && <Image source={image.radar} style={[styles.image,{ }]} />}
+              {findMatches == null && <Image source={image.radar}  style={[styles.image,{ borderColor:findMatches == null?'#fff':'#FA3EBA',}]} />}
                {findMatches !== null &&<Image source={{uri:findMatches?.image}} style={[styles.image,{ borderColor:findMatches == null?'#fff':'#FA3EBA',}]} />}
               </TouchableOpacity>
               {findMatches&&<Text style={{color:'#FA3EBA',    fontFamily:'Lexend',fontWeight:'700',marginTop:20}}>{findMatches?.first_name}</Text>}
             </Animated.View>
-            <TouchableOpacity onPress={handleCloseModal} style={styles.closeButton}>
+            <TouchableOpacity onPress={()=>{
+              handleCloseModal()
+              
+              dispatch(clearMatchPersons());
+              }} style={styles.closeButton}>
               <Image source={image.Close} style={styles.closeButtonIcon} />
             </TouchableOpacity>
           </View>

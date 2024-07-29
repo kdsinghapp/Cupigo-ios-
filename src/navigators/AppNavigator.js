@@ -8,11 +8,24 @@ import { persistor, store } from '../redux/Store';
 import { PersistGate } from 'redux-persist/integration/react';
 import Toast from 'react-native-toast-message';
 import toastConfig from '../configs/customToast';
+import database from '@react-native-firebase/database';
 
 
 export default function AppNavigator() {
   const [isConnected, setIsConnected] = useState(true);
 
+  // Reference to the root of the database
+  const ref = database().ref('/');
+  
+  // Read data from the root
+  ref.once('value')
+    .then(snapshot => {
+      console.log('Database Data:', snapshot.val());
+    })
+    .catch(error => {
+      console.error('Database Error:', error);
+    });
+  
   // React.useEffect(() => {
   //   notificationListener();
   //   requestUserPermission();

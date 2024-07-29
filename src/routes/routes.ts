@@ -19,6 +19,7 @@ import OtpScreen from "../screen/auth/OtpScreen";
 import SignupMethod from "../screen/auth/SignupMethod";
 import Findmatches from "../screen/bottomTab/Findmatches";
 import Message from "../screen/bottomTab/Message";
+import Profile from "../screen/bottomTab/Profile";
 import Subscription from "../screen/bottomTab/Subscription";
 import UserProfile from "../screen/bottomTab/UserProfile";
 import chat from "../screen/bottomTab/chat/chat";
@@ -102,7 +103,7 @@ const _routes = {
 
     {
       name: ScreenNameEnum.BIOGRAPHY,
-      Component:Biography,
+      Component:Profile,
     },
     {
       name: ScreenNameEnum.CHANGE_IDENTIFIER,

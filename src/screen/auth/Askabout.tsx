@@ -12,20 +12,21 @@ import { get_quesctions } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
 import { errorToast } from '../../configs/customToast';
 import { Dropdown } from 'react-native-element-dropdown';
+import DropDownPicker from 'react-native-dropdown-picker';
 export default function Askabout() {
-const data = [
-  { label: 'Yes', value: 'Yes' },
-  { label: 'No', value: 'No' },
-];
-const data2 = [
-  { label: 'Small to Medium (1m50 - 1m70)', value: 'Small to Medium (1m50 - 1m70)' },
-  { label: 'Medium to Tall (1m71 - 1m90)', value: 'Medium to Tall (1m71 - 1m90)' },
-];
+  const data = [
+    { label: 'Yes', value: 'Yes' },
+    { label: 'No', value: 'No' },
+  ];
+  const data2 = [
+    { label: 'Small to Medium (1m50 - 1m70)', value: 'Small to Medium (1m50 - 1m70)' },
+    { label: 'Medium to Tall (1m71 - 1m90)', value: 'Medium to Tall (1m71 - 1m90)' },
+  ];
 
-const [activity, setActivity] = useState(null);
+  const [activity, setActivity] = useState(null);
 
-// Add this inside your `getQuestions` function or wherever appropriate
-const additionalQuestions ='What are your hobbies ?'
+  // Add this inside your `getQuestions` function or wherever appropriate
+  const additionalQuestions = 'What are your hobbies ?'
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -34,9 +35,12 @@ const additionalQuestions ='What are your hobbies ?'
   const Question = useSelector(state => state.auth.Question);
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState(hobbies);
   const [height1, setHeight1] = useState('');
   const [height2, setHeight2] = useState('');
-  const [height3, setHeight3] = useState('');
+
 
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
@@ -77,10 +81,12 @@ const additionalQuestions ='What are your hobbies ?'
   };
 
   const handleNext = () => {
+    const height3 = `${value[0]},${value[1]},${value[2]} `
     if (!height1 || !height2 || !height3) {
-     return errorToast("Please fill all fields.");
+      return errorToast("Please fill all fields.");
     }
-    
+
+
     const data = {
       username,
       age,
@@ -89,15 +95,21 @@ const additionalQuestions ='What are your hobbies ?'
       height1,
       height2,
       height3,
+      
     };
 
     navigation.navigate(ScreenNameEnum.ASK_LOOKING, { ...data });
   };
 
+
+
+  
   return (
-    <LinearGradient colors={['#BD0DF4', '#FA3EBA']}style={{flex:1,
-    alignItems:'center',
-    paddingTop:Platform.OS == 'ios'?20:5}}>
+    <LinearGradient colors={['#BD0DF4', '#FA3EBA']} style={{
+      flex: 1,
+      alignItems: 'center',
+      paddingTop: Platform.OS == 'ios' ? 20 : 5
+    }}>
       {isLoading ? <Loading /> : null}
 
       <View style={{ marginTop: hp(5), justifyContent: 'center', marginBottom: 30 }}>
@@ -109,69 +121,143 @@ const additionalQuestions ='What are your hobbies ?'
       <ScrollView contentContainerStyle={styles.scrollViewContent} showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
           <View style={styles.greetingContainer}>
-            <Text style={{fontWeight:'800',fontSize:22,color:'#fff'}}>Some criteria about you ?</Text>
+            <Text style={{ fontWeight: '800', fontSize: 22, color: '#fff' }}>Some criteria about you ?</Text>
           </View>
           {AboutQuestion?.map((question, index) => (
             <View key={index} style={{}}>
-            <View style={{width:'90%',paddingHorizontal:10}}> 
-              <Text style={[{ fontFamily:'Lexend',fontSize: 18, 
-              marginVertical:10,color:'#fff',fontWeight:'700',lineHeight:20 }]}>
-                {question.question}
-              </Text>
+              <View style={{ width: '90%', paddingHorizontal: 10 }}>
+                <Text style={[{
+                  fontFamily: 'Lexend', fontSize: 18,
+                  marginVertical: 10, color: '#fff', fontWeight: '700', lineHeight: 20
+                }]}>
+                  {question.question}
+                </Text>
               </View>
-             {question.question == additionalQuestions ? <View style={styles.inputContainer}>
-                <TextInput
-                  placeholderTextColor={'#BD0DF4'}
-                
-                  style={styles.input}
-                  placeholder={`Enter here`}
-                  value={index === 0 ? height1 : index === 1 ? height2 : height3}
-                  onChangeText={text => {              
-                    if (index === 2) setHeight3(text);
+              {question.question == additionalQuestions ?
+                <View style={{
+                  marginBottom: hp(3),
+                  justifyContent: 'center', alignItems: 'center',
+                  backgroundColor: '#fff', borderRadius: 30, width: wp(85)
+                }}>
+                  <DropDownPicker
+                    style={{ borderWidth: 0, borderRadius: 30 }}
+                    placeholderStyle={{
+                      color: '#BD0DF4',
+                      fontWeight: '600'
+                    }}
+                 
+                    mode='BADGE'
+                    badgeColors={'#BD0DF4'}
+                    badgeTextStyle={{
+                      color: '#fff',
+                      fontWeight: '700'
+                    }}
+                 badgeDotColors={'#FA3EBA'}
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    multiple={true}
+                    min={1}
+                    max={3}
+                    showTickIcon={true}
+                    showArrowIcon={true}
+                  />
+                  <View>
+
+                  </View>
+                </View> :
+                <Dropdown
+
+                  style={styles.dropdown}
+                  data={index == 1 ? data : data2}
+                  labelField="label"
+                  valueField="value"
+                  selectedTextStyle={{
+                    color: '#000',
+                    fontWeight: '600'
+                  }}
+                  placeholder="Select an option"
+                  placeholderStyle={{
+                    color: '#BD0DF4',
+                    fontWeight: '600'
+                  }}
+                  itemTextStyle={{
+                    color: '#BD0DF4',
+                    fontWeight: '600'
+                  }}
+                  value={index == 0 ? height1 : height2}
+                  onChange={item => {
+                    if (index === 0) setHeight1(item.value);
+                    else if (index === 1) setHeight2(item.value)
                   }}
                 />
-              </View>:
-               <Dropdown
-               style={styles.dropdown}
-               data={index == 1?data:data2}
-               labelField="label"
-               valueField="value"
-               selectedTextStyle={{
-                color:'#000',
-                fontWeight:'600'
-               }}
-               placeholder="Select an option"
-               placeholderStyle={{
-                color:'#BD0DF4',
-                fontWeight:'600'
-               }}
-               itemTextStyle={{
-                color:'#BD0DF4',
-                fontWeight:'600'
-               }}
-               value={index == 0?height1:height2}
-               onChange={item =>{
-                if (index === 0) setHeight1(item.value);
-                else if (index === 1) setHeight2(item.value)}}
-             />
               }
             </View>
           ))}
 
-        
 
-          <TouchableOpacity onPress={handleNext} style={styles.button}>
+
+      {!open &&<TouchableOpacity onPress={handleNext} style={styles.button}>
             <Text style={styles.buttonText}>NEXT</Text>
-          </TouchableOpacity>
-        
+          </TouchableOpacity> }
+
         </View>
-        {isKeyboardOpen && <View  style={{height:hp(20)}} />}
+        {isKeyboardOpen && <View style={{ height: hp(20) }} />}
       </ScrollView>
     </LinearGradient>
   );
 }
+const hobbies = [
+  { id: '1', value: 'Reading', label: 'Reading' },
+  { id: '2', value: 'Traveling', label: 'Traveling' },
+  { id: '3', value: 'Cooking', label: 'Cooking' },
+  { id: '4', value: 'Hiking', label: 'Hiking' },
+  { id: '5', value: 'Photography', label: 'Photography' },
+  { id: '6', value: 'Playing Sports', label: 'Playing Sports' },
+  { id: '7', value: 'Watching Movies', label: 'Watching Movies' },
+  { id: '8', value: 'Gardening', label: 'Gardening' },
+  { id: '9', value: 'Painting', label: 'Painting' },
+  { id: '10', value: 'Yoga', label: 'Yoga' },
+  { id: '11', value: 'Dancing', label: 'Dancing' },
+  { id: '12', value: 'Writing', label: 'Writing' },
+  { id: '13', value: 'Playing Musical Instruments', label: 'Playing Musical Instruments' },
+  { id: '14', value: 'Gaming', label: 'Gaming' },
+  { id: '15', value: 'Swimming', label: 'Swimming' },
+  { id: '16', value: 'Fishing', label: 'Fishing' },
+  { id: '17', value: 'Crafting', label: 'Crafting' },
+  { id: '18', value: 'Biking', label: 'Biking' },
+  { id: '19', value: 'Running', label: 'Running' },
+  { id: '20', value: 'Bird Watching', label: 'Bird Watching' },
+  { id: '21', value: 'Surfing', label: 'Surfing' },
+  { id: '22', value: 'Volunteering', label: 'Volunteering' },
+  { id: '23', value: 'Knitting', label: 'Knitting' },
+  { id: '24', value: 'Rock Climbing', label: 'Rock Climbing' },
+  { id: '25', value: 'Meditating', label: 'Meditating' },
+  { id: '26', value: 'Collecting (stamps, coins, etc.)', label: 'Collecting (stamps, coins, etc.)' },
+  { id: '27', value: 'Attending Concerts', label: 'Attending Concerts' },
+  { id: '28', value: 'Wine Tasting', label: 'Wine Tasting' },
+  { id: '29', value: 'Learning Languages', label: 'Learning Languages' },
+  { id: '30', value: 'Astronomy', label: 'Astronomy' },
+];
 
 const styles = StyleSheet.create({
+  button: {
+    width: wp(80),
+    height: hp(7),
+    backgroundColor: '#BD0DF4',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    marginVertical: hp(2),
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '800',
+  },
   dropdown: {
     backgroundColor: '#fff',
     borderRadius: 30,
@@ -196,7 +282,7 @@ const styles = StyleSheet.create({
   progressBar: {
     backgroundColor: '#eb90e7',
     alignSelf: 'center',
-    marginTop:0,
+    marginTop: 0,
     borderRadius: 20,
     height: 20,
     width: '90%',
@@ -209,10 +295,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   contentContainer: {
-    borderRadius:20,
+    borderRadius: 20,
 
-paddingHorizontal:10,
-backgroundColor:'rgba(255, 255, 255, 0.35)',
+    paddingHorizontal: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.35)',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -221,8 +307,8 @@ backgroundColor:'rgba(255, 255, 255, 0.35)',
   greetingContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom:10,
-  
+    marginBottom: 10,
+
   },
 
   inputContainer: {
@@ -232,22 +318,23 @@ backgroundColor:'rgba(255, 255, 255, 0.35)',
     alignItems: 'center',
     height: 50,
 
-    borderRadius:30,
+    borderRadius: 30,
     width: wp(85),
+
     paddingHorizontal: 10,
-    marginTop:10,
+    marginTop: 10,
   },
   input: {
     fontSize: 14,
     fontWeight: '600',
     flex: 1,
-    fontFamily:'Lexend',
-    color:'#000'
+    fontFamily: 'Lexend',
+    color: '#000'
   },
   button: {
     backgroundColor: colors.btnColor,
     paddingHorizontal: mWidth * 0.05,
-    paddingVertical:15,
+    paddingVertical: 15,
     width: mWidth * 0.4,
     justifyContent: 'center',
     alignItems: 'center',
@@ -259,6 +346,6 @@ backgroundColor:'rgba(255, 255, 255, 0.35)',
     fontSize: 16,
     color: colors.white,
     fontWeight: '600',
-    fontFamily:'Lexend'
+    fontFamily: 'Lexend'
   },
 });

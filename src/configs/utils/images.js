@@ -3,6 +3,7 @@ export const image = {
    heartLogo: require('../../assets/croping/Design3x.png'),
    logoLine: require('../../assets/croping/Designl3x.png'),
    Subscription: require('../../assets/croping/Subscription3x.png'),
+   maches: require('../../assets/croping/search.png'),
    Message: require('../../assets/croping/Message_Active.png'),
    Profile: require('../../assets/croping/Subscription3x.png'),
    G_icon: require('../../assets/croping/GoogleLogo2x.png'),
@@ -44,6 +45,9 @@ export const image = {
    Close: require('../../assets/croping/close.png'),
    Buy: require('../../assets/croping/buy.png'),
    c_sub: require('../../assets/croping/CurrentSubscription.png'),
+   setting: require('../../assets/croping/Setting.png'),
+   arrow: require('../../assets/croping/arrow.png'),
+   title: require('../../assets/croping/title.png'),
 
 
 

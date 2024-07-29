@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_profile, update_profile } from '../../redux/feature/authSlice';
 import Loading from '../../configs/Loader';
+import ScreenNameEnum from '../../routes/screenName.enum';
 
 export default function Biography() {
   const navigation = useNavigation();
@@ -79,7 +80,7 @@ city:city,
     <View style={{ backgroundColor: colors.backgroundColorLight, flex: 1 }}>
       {isLoading ? <Loading /> : null}
       <View style={{height:Platform.OS == 'ios'?30:0}} />
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.headerProfile}>
             <View style={styles.profileImage}>
@@ -101,13 +102,22 @@ city:city,
             colors={['#BD0DF4', '#FA3EBA']}
             style={styles.gradient}
           />
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => {
               navigation.goBack();
             }}
             style={styles.backButton}
           >
             <Image source={image.left} style={styles.backButtonImage} />
+          </TouchableOpacity> */}
+
+          <TouchableOpacity
+            onPress={() => {
+            navigation.navigate(ScreenNameEnum.BIOGRAPHY)
+            }}
+            style={{position:'absolute',right:10,top:10}}
+          >
+            <Image source={image.setting} style={{height:30,width:30}} />
           </TouchableOpacity>
         </View>
 
@@ -123,7 +133,7 @@ city:city,
         onChangeText={setUserName}
         style={styles.textInput}
       />
-    </View>: <Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{userName}</Text>
+    </View>: <Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{userName}</Text>
     }
           </View>
           <View style={styles.inputContainer}>
@@ -137,7 +147,7 @@ city:city,
                 onChangeText={setGender}
                 style={styles.textInput}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{gender}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{gender}</Text>
     }
           </View>
           <View style={styles.inputContainer}>
@@ -151,7 +161,7 @@ city:city,
                 value={dob}
                 onChangeText={setDob}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{dob}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{dob}</Text>
     }
           </View>
           <View style={styles.inputContainer}>
@@ -165,7 +175,7 @@ city:city,
                 value={address}
                 onChangeText={setAddress}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{address}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{address}</Text>
     }
           </View>
 
@@ -180,7 +190,7 @@ city:city,
                 value={city}
                 onChangeText={setCity}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{city}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{city}</Text>
     }
           </View>
           <View style={styles.inputContainer}>
@@ -194,7 +204,7 @@ city:city,
                 value={age}
                 onChangeText={setAge}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{age}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{age}</Text>
     }
           </View>
           <View style={styles.inputContainer}>
@@ -208,7 +218,7 @@ city:city,
                 value={countryCode}
                 onChangeText={setCountryCode}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{countryCode}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{countryCode}</Text>
     }
           </View>
           <View style={styles.inputContainer}>
@@ -222,7 +232,7 @@ city:city,
                 value={mobile}
                 onChangeText={setMobile}
               />
-            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000'}}>{mobile}</Text>
+            </View>:<Text style={{fontSize:14,fontFamily:'Recoleta-SemiBold',color:'#000',fontWeight:'400'}}>{mobile}</Text>
     }
           </View>
          {isEdit && <TouchableOpacity 
@@ -234,6 +244,8 @@ city:city,
           </TouchableOpacity>}
           <View style={styles.bottomSpace} />
         </View>
+
+        <View  style={{height:hp(10)}} />
       </ScrollView>
     </View>
   )
@@ -296,7 +308,7 @@ color:'#000',fontWeight:'500',fontSize:14  },
     backgroundColor: colors.backgroundColor,
     top: 0,
     zIndex: -1,
-    height: hp(20),
+    height: hp(16),
     width: '50%',
   },
   backButton: {

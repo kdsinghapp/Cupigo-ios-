@@ -18,7 +18,7 @@ const Welcome = () => {
     console.log('================checkLogout===========isLogin=========', isLogin);
     if (!isLogOut && !isLogin || isLogOut && !isLogin) {
       console.log('================Login====================');
-      navigation.navigate(ScreenNameEnum.SIGNUP_METHOD);
+      navigation.navigate(ScreenNameEnum.ASK_NAME);
     }
     if (!isLogOut && isLogin) {
       console.log('================HomeTab====================');
@@ -44,25 +44,25 @@ const Welcome = () => {
         colors={['#BD0DF4', '#FA3EBA']}
         style={styles.background}
       >
+              <Image
+        resizeMode='contain'
+        source={image.title}
+        style={{height:90,position:'absolute',top:hp(10)}}
+      />
         <View style={styles.content}>
         <Image
         resizeMode='contain'
-        source={image.heartLogo}
+        source={image.arrow}
         style={styles.logo}
       />
           
         </View>
-        <View style={{position:'absolute',bottom:30,left:20}}>
-        <Text style={styles.welcomeText}>Welcome to</Text>
-          <Text style={styles.brandName}>Cupigo!</Text>
+        <View style={{}}>
+        <Text style={styles.Text}>“Because you deserve </Text>
+        <Text style={styles.Text}>more than just a swipe”</Text>
+          
         </View>
-        <View style={{position:'absolute',bottom:20,right:0}}>
-        <Image
-        resizeMode='contain'
-        source={image.logoLine}
-        style={{height:hp(18),width:wp(60)}}
-      />
-        </View>
+      
       </LinearGradient>
     </View>
   );
@@ -70,6 +70,7 @@ const Welcome = () => {
 
 const styles = StyleSheet.create({
   logo: {
+    marginTop:-20,
     height:hp(40),
    width:170
   },
@@ -97,6 +98,28 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold',
     fontFamily:'Lexend'
+  },
+  shadowText: {
+    position:'absolute',
+    top:hp(15),
+    fontSize:70,
+    fontWeight: '800',
+    color: '#ff9bd9',
+    textShadowColor: '#FF00FF',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+    fontFamily:'Lexend'
+  },
+ Text: {
+ 
+    fontSize:30,
+    fontWeight: '800',
+    color: '#ff9bd9',
+    textShadowColor: '#FF00FF',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+    fontFamily:'LeagueSpartan-SemiBold',
+  
   },
 });
 

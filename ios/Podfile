@@ -28,7 +28,7 @@ target 'Cupigo' do
   pod 'FirebaseCore', :modular_headers => true
   pod 'Firebase/Analytics',:modular_headers => true
   pod 'Firebase/Auth', :modular_headers => true  # Add other Firebase dependencies if needed
-
+  pod 'Firebase/Database', :modular_headers => true
 
   use_react_native!(
     :path => config[:reactNativePath],

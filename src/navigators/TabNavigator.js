@@ -9,6 +9,7 @@ import Profile from '../screen/bottomTab/Profile';
 import { image } from '../configs/utils/images';
 import Findmatches from '../screen/bottomTab/Findmatches';
 import { useNavigation } from '@react-navigation/native';
+import Biography from '../screen/profilesection/Biography';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,18 +66,18 @@ const navigation =useNavigation()
         }}
       />
        <Tab.Screen
-        name="Find Matches"
+        name="Matches"
         component={Findmatches}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image
-              source={image.Subscription}
-              style={{
-                width: 24,
-                height: 24,
-                tintColor: focused ? '#7756FC' : color,
-              }}
-            />
+            source={image.maches}
+            style={{
+              width: 24,
+              height: 24,
+              tintColor: focused ? '#7756FC' : color,
+            }}
+          />
           ),
         }}
       />
@@ -98,7 +99,7 @@ const navigation =useNavigation()
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={Biography}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Image

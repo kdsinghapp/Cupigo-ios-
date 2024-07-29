@@ -1,6 +1,6 @@
 
     import React, { useState } from 'react';
-    import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView, Alert } from 'react-native';
+    import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView, Alert, Image } from 'react-native';
 import RightIcon from '../../assets/svg/Right.svg'; // Assuming you have an SVG or image for the right arrow icon
 import { useNavigation } from '@react-navigation/native';
 import ScreenNameEnum from '../../routes/screenName.enum';
@@ -8,6 +8,7 @@ import AddRatingModal from '../modal/RattingModal';
 import { useDispatch } from 'react-redux';
 import { logoutSuccess } from '../../redux/feature/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { image } from '../../configs/utils/images';
     
     const options = [
       { id: '1', title: 'Biography',screen:ScreenNameEnum.BIOGRAPHY },
@@ -61,6 +62,15 @@ const handleLogout = () => {
       return (
         <View style={styles.container}>
           <Text style={styles.headerText}>Profile</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={styles.backButton}
+          >
+            <Image source={image.left} style={styles.backButtonImage} />
+          </TouchableOpacity>
+
           <ScrollView showsVerticalScrollIndicator={false}>
           <FlatList
           
@@ -118,6 +128,15 @@ setRattingModal(true)
         paddingVertical: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#DDD',
+      },
+      backButton: {
+        position: 'absolute',
+        top: 45,
+        left: 20,
+      },
+      backButtonImage: {
+        height:35,
+        width:35,
       },
       optionText: {
         fontSize:15,

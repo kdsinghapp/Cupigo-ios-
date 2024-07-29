@@ -978,6 +978,9 @@ PODS:
     - FirebaseAnalytics (~> 10.20.0)
   - Firebase/CoreOnly (10.20.0):
     - FirebaseCore (= 10.20.0)
+  - Firebase/Database (10.20.0):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (~> 10.20.0)
   - Firebase/Firestore (10.20.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.20.0)
@@ -1031,6 +1034,11 @@ PODS:
     - FirebaseCore (~> 10.0)
   - FirebaseCoreInternal (10.29.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseDatabase (10.20.0):
+    - FirebaseAppCheckInterop (~> 10.17)
+    - FirebaseCore (~> 10.0)
+    - FirebaseSharedSwift (~> 10.0)
+    - leveldb-library (~> 1.22)
   - FirebaseFirestore (10.20.0):
     - FirebaseCore (~> 10.0)
     - FirebaseCoreExtension (~> 10.0)
@@ -2470,6 +2478,10 @@ PODS:
     - Firebase/Auth (= 10.20.0)
     - React-Core
     - RNFBApp
+  - RNFBDatabase (18.7.3):
+    - Firebase/Database (= 10.20.0)
+    - React-Core
+    - RNFBApp
   - RNFBFirestore (18.9.0):
     - Firebase/Firestore (= 10.20.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
@@ -2574,6 +2586,7 @@ DEPENDENCIES:
   - Firebase
   - Firebase/Analytics
   - Firebase/Auth
+  - Firebase/Database
   - FirebaseCore
   - FirebaseCoreInternal
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -2641,6 +2654,7 @@ DEPENDENCIES:
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
+  - "RNFBDatabase (from `../node_modules/@react-native-firebase/database`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
@@ -2665,6 +2679,7 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreExtension
     - FirebaseCoreInternal
+    - FirebaseDatabase
     - FirebaseFirestore
     - FirebaseFirestoreInternal
     - FirebaseInstallations
@@ -2822,6 +2837,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
+  RNFBDatabase:
+    :path: "../node_modules/@react-native-firebase/database"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBMessaging:
@@ -2859,6 +2876,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
   FirebaseCoreExtension: 0659f035b88c5a7a15a9763c48c2e6ca8c0a2977
   FirebaseCoreInternal: df84dd300b561c27d5571684f389bf60b0a5c934
+  FirebaseDatabase: 7e838abb62ac2e1a1c792cbeb51df3c4b6607f54
   FirebaseFirestore: 21be9ea244830f6cac15464550c2975c43f9dffc
   FirebaseFirestoreInternal: f43d25cc04835ec3aa1885f4fc946a1a4f9e1c56
   FirebaseInstallations: 913cf60d0400ebd5d6b63a28b290372ab44590dd
@@ -2941,6 +2959,7 @@ SPEC CHECKSUMS:
   RNFBAnalytics: aec413bc1623191bdb7d0378c49b92d8c289b05b
   RNFBApp: 9b25191f7a5e72c185b7e43fffb0d906869c4659
   RNFBAuth: 95acca18353778903885b2b25c25ddb81c050fed
+  RNFBDatabase: 4ab0c93f7783cbd3449bbfe5d9a4003c8690f7ed
   RNFBFirestore: be3b76650231721bad4e9b28bf3a09a3ce62f8bb
   RNFBMessaging: 99621af036e0aa85506390f77d79c9e6353aacca
   RNFBStorage: ebf84836d1e919f1fd3fa8d53178e47ca35f186b
@@ -2954,6 +2973,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   Yoga: bd92064a0d558be92786820514d74fc4dddd1233
 
-PODFILE CHECKSUM: 9137a9cfba7d0bf7ba623b1e6bc85a270165d8b6
+PODFILE CHECKSUM: 42fe261c745a9d32be039c0255ada580e2a997ad
 
 COCOAPODS: 1.15.2
